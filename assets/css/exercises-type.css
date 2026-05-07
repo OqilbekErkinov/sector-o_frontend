@@ -1,0 +1,61 @@
+.ex-wrapper {
+  max-width: 450px;
+  margin: 0 auto;
+  padding: 14px;
+  background: #222222;
+}
+
+.ex-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: white;
+}
+
+.ex-header h1 {
+  font-size: 28px;
+}
+
+.ex-header span {
+  font-size: 24px;
+  cursor: pointer;
+}
+
+.ex-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+  margin-top: 20px;
+}
+
+.ex-card {
+  background: #1f1f1f;
+  border-radius: 12px;
+  overflow: hidden;
+  text-decoration: none;
+  border: 1px solid #333;
+  transition: all 0.3s ease;
+}
+
+.ex-card:hover {
+  transform: scale(1.02);
+  border-color: #00CFFF;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.4);
+}
+
+.ex-card:hover img {
+  transform: scale(1.1);
+}
+
+.ex-card img {
+  width: 100%;
+  height: 140px;
+  object-fit: cover;
+  transition: transform 0.5s ease;
+}
+
+.ex-card p {
+  color: white;
+  padding: 8px;
+  font-size: 14px;
+}

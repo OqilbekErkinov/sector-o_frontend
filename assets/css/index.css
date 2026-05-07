@@ -1,0 +1,195 @@
+@font-face {
+  font-family: 'Gropled';
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+  src: url('/fonts/Gropled-Bold.otf') format('opentype');
+
+}
+
+@font-face {
+  font-family: 'Futura PT';
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+  src: url('/fonts/FuturaCyrillicBold.ttf') format('ttf'),
+    url('/fonts/FuturaCyrillicBook.ttf') format('ttf'),
+    url('/fonts/FuturaCyrillicDemi.ttf') format('ttf'),
+    url('/fonts/FuturaCyrillicExtraBold.ttf') format('ttf'),
+    url('/fonts/FuturaCyrillicHeavy.ttf') format('ttf'),
+    url('/fonts/FuturaCyrillicLight.ttf') format('ttf'),
+    url('/fonts/FuturaCyrillicMedium.ttf') format('ttf');
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  overflow-x: hidden;
+  height: 100%;
+}
+
+body:not(.auth-body) {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  min-height: 100%;
+  overflow-x: hidden;
+  background-color: #222222 !important;
+  padding-bottom: 100px;
+  -webkit-overflow-scrolling: touch;
+}
+
+.auth-body {
+  margin: 0;
+}
+
+button {
+  font-family: 'Gropled', sans-serif !important;
+  font-size: 18px;
+  letter-spacing: 1px;
+  max-width: 100%;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  cursor: pointer;
+}
+
+button:active {
+  transform: scale(0.96);
+}
+
+.container {
+  max-width: 100% !important;
+  /* Allow to shrink */
+  width: 100%;
+  margin: 0 auto;
+  padding: 14px !important;
+  box-sizing: border-box;
+}
+
+.btn-primary {
+  background: #00CFFF;
+  color: #000;
+  border: none;
+  padding: 12px;
+  border-radius: 12px;
+  font-weight: 800;
+  width: 100%;
+  display: block;
+}
+
+.btn-primary:hover {
+  background: #00e0ff;
+  transform: translateY(-2px);
+  box-shadow: 0 0 20px rgba(0, 207, 255, 0.5);
+}
+
+.btn-secondary {
+  background: transparent;
+  border: 1px solid #00CFFF;
+  color: #00CFFF;
+  padding: 12px;
+  border-radius: 12px;
+  flex: 1;
+}
+
+.btn-secondary:hover {
+  background: rgba(0, 207, 255, 0.1);
+  transform: translateY(-2px);
+  box-shadow: 0 0 15px rgba(0, 207, 255, 0.2);
+}
+
+/* IMAGES */
+.image-grid {
+  display: flex;
+  gap: 10px;
+}
+
+.main-img {
+  width: 50%;
+  border-radius: 15px;
+}
+
+/* QUICK START */
+.quick-start h3 {
+  color: #fff;
+  margin-bottom: 10px;
+}
+
+.quick-cards {
+  display: flex;
+  gap: 10px;
+}
+
+.card {
+  flex: 1;
+  background: #1f1f1f;
+  padding: 15px;
+  text-align: center;
+  border-radius: 12px;
+  color: #fff;
+  font-size: 14px;
+}
+
+/* PROGRAM */
+.program-card {
+  background: #1f1f1f;
+  padding: 15px;
+  border-radius: 15px;
+}
+
+.program-title {
+  color: #fff;
+  font-weight: bold;
+}
+
+.program-desc {
+  color: #aaa;
+  font-size: 14px;
+  margin: 5px 0 10px;
+}
+
+/* EXERCISES */
+.exercise-list {
+  display: flex;
+  gap: 10px;
+}
+
+.exercise-card {
+  flex: 1;
+  text-align: center;
+}
+
+.exercise-card img {
+  width: 100%;
+  border-radius: 10px;
+}
+
+.exercise-card p {
+  color: #fff;
+  font-size: 14px;
+  margin-top: 5px;
+}
+
+/* NUXT PAGE & LAYOUT TRANSITIONS */
+.page-enter-active,
+.page-leave-active {
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.page-enter-from,
+.page-leave-to {
+  opacity: 0;
+  transform: translateY(15px);
+}
+
+.layout-enter-active,
+.layout-leave-active {
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.layout-enter-from,
+.layout-leave-to {
+  opacity: 0;
+  filter: blur(5px);
+}

@@ -1,0 +1,231 @@
+{
+  "profile": {
+    "title": "Profil",
+    "balance": "Balans",
+    "credit": "Kredit",
+    "generations": "Generatsiyalar",
+    "settings": "Sozlamalar",
+    "avatar_selection": "Avatar tanlash",
+    "add_new_avatar": "Yangi avatar qo'shish",
+    "aspect_ratio": "Tomonlar nisbati",
+    "language": "Til",
+    "buy_photo": "Foto sotib olish",
+    "care_service": "Qo'llab-quvvatlash xizmati",
+    "care_service_desc": "Qo'llab-quvvatlash xizmatiga o'tish uchun quyidagi tugmani bosing — biz sizga yordam berishga va har qanday savolingizga javob berishga doim tayyormiz",
+    "care_service_btn": "O'tish",
+    "social_networks": "Ijtimoiy tarmoqlar",
+    "go_to": "O'tish",
+    "premium_subscription": "Premium obuna",
+    "choose_tariff": "Mos tarifni tanlang",
+    "photo_count": "{count} foto",
+    "tagline": "Kuchingizni kashf eting",
+    "full_name": "F.I.O",
+    "phone": "Telefon raqami",
+    "email": "Email manzili",
+    "save": "Saqlash",
+    "update_success": "Ma'lumotlar yangilandi!",
+    "logout": "Chiqish",
+    "personal_info": "Shaxsiy ma'lumotlar",
+    "credit_info": "Kredit — bu sizning rasm yaratish uchun qolgan imkoniyatlaringiz.",
+    "edit_full_name": "Ism familiya",
+    "edit_phone": "Telefon raqami",
+    "edit_email": "Elektron pochta",
+    "edit_weekly_goal": "Haftalik mashq maqsadi",
+    "edit_weekly_goal_placeholder": "Necha kun shug'ullanasiz? (1-7)",
+    "change_photo": "Rasmni o'zgartirish",
+    "delete_photo": "Rasmni o'chirish",
+    "saving": "Saqlanmoqda..."
+  },
+  "payment": {
+    "title": "To'lov turini tanlang"
+  },
+  "login": {
+    "title": "Xush kelibsiz",
+    "subtitle": "Hisobingizga kiring",
+    "email_placeholder": "Emailingizni kiriting",
+    "password_placeholder": "Parolingizni kiriting",
+    "btn": "Kirish",
+    "no_account": "Accountingiz yo'qmi?",
+    "register_link": "Ro'yxatdan o'tish"
+  },
+  "register": {
+    "title": "Ro'yxatdan o'tish",
+    "subtitle": "Yangi hisob yarating",
+    "verify_title": "Emailni tasdiqlash",
+    "verify_desc": "manziliga yuborilgan 6 xonali kodni kiriting",
+    "full_name": "F.I.O",
+    "phone": "Telefon",
+    "email": "Email",
+    "password": "Parol",
+    "code": "Tasdiqlash kodi",
+    "btn": "Ro'yxatdan o'tish",
+    "verify_btn": "Tasdiqlash",
+    "have_account": "Accountingiz bormi?",
+    "login_link": "Kirish",
+    "sending": "Yuborilmoqda...",
+    "verifying": "Tasdiqlash..."
+  },
+  "lang_select": {
+    "title": "Tilni tanlang",
+    "subtitle": "Dasturdan foydalanish uchun qulay tilni tanlang"
+  },
+  "home": {
+    "welcome": "Xush kelibsiz",
+    "warrior": "Jangchi",
+    "workouts": "Mashqlar",
+    "active_days": "Faol kunlar",
+    "weekly_goal": "Haftalik maqsad",
+    "trainer": "shaxsiy onlayn treneringiz!",
+    "hero_title": "Tanangizni o'zgartiring, hayotingizni yuksaltiring",
+    "hero_subtitle": "Siz uchun maxsus tayyorlangan shaxsiy mashg'ulotlar va tiklanish rejalari.",
+    "description": "Sector-O sizning yo'lingizni quvvatlaydi, terni kuchga va harakatni muvaffaqiyatga aylantiradi. Siz shunchaki shug'ullanmayapsiz — siz o'zgaryapsiz!",
+    "start_training": "Mashg'ulotni boshlash",
+    "choose_program": "Dasturni tanlash",
+    "quick_start": "Tezkor start",
+    "fitness_goals": "Maqsadli natijalar",
+    "featured_program": "Maxsus dastur",
+    "weight_loss": "Ozish",
+    "muscle_gain": "Mushak to'plash",
+    "endurance": "Formada qolish",
+    "popular_exercises": "Mashhur mashqlar",
+    "start_program": "Dasturni boshlash",
+    "beginner_program": "7 kunlik yangi boshlovchilar uchun dastur",
+    "beginner_desc": "Sizning fitnes sayohatingizni boshlash uchun to'liq haftalik reja.",
+    "daily_motivation": "Kunlik motivatsiya",
+    "daily_quote": "Muvaffaqiyat o'z-o'zini tarbiyalashdan boshlanadi.",
+    "see_all": "Hammasini ko'rish",
+    "daily_activity": "Kunlik faollik",
+    "water": "Suv",
+    "workout": "Mashg'ulot"
+  },
+  "nutrition": {
+    "title": "Ovqatlanish bo'yicha qo'llanma",
+    "subtitle": "Aqlli ovqatlaning. Qattiq mashq qiling. Natijaga erishing.",
+    "calorie_calculator": "Kalloriya kalkulyatori",
+    "calculate": "Hisoblash",
+    "goal": "Maqsad",
+    "gender": "Jins",
+    "male": "Erkak",
+    "female": "Ayol",
+    "weight": "Vazn (kg)",
+    "height": "Bo'y (sm)",
+    "age": "Yosh",
+    "activity": "Faollik darajasi",
+    "sedentary": "Kam harakat (Mashqlarsiz)",
+    "lightly_active": "Yengil faol (haftada 1-3 kun)",
+    "moderately_active": "O'rtacha faol (haftada 3-5 kun)",
+    "very_active": "Juda faol (haftada 6-7 kun)",
+    "extra_active": "Ekstremal faol (Sportchi/Jismoniy ish)",
+    "maintain": "Vaznni saqlash",
+    "lose": "Ozish",
+    "gain": "Mushak to'plash",
+    "bmi_calculator": "BMI kalkulyatori",
+    "calculate_bmi": "BMI hisoblash",
+    "daily_diet": "Kunlik ratsion",
+    "breakfast": {
+      "title": "Nonushta",
+      "desc": "Protein uchun rezavorlar va tuxum bilan suli yormasi."
+    },
+    "lunch": {
+      "title": "Tushlik",
+      "desc": "Jigarrang guruch va bargli ko'katlar bilan yog'siz tovuq go'shti."
+    },
+    "dinner": {
+      "title": "Kechki ovqat",
+      "desc": "Bug'da pishirilgan sabzavotlar bilan qovurilgan losos yoki baliq."
+    },
+    "choose_goal": "Maqsadingizni tanlang",
+    "mass_gain": {
+      "title": "Vazn to'plash",
+      "desc": "Yuqori kaloriya va doimiy protein iste'moliga e'tibor bering."
+    },
+    "fat_loss": {
+      "title": "Yog' yo'qotish",
+      "desc": "Mushaklarni saqlab qolish uchun yuqori proteinli kaloriyali defitsit."
+    },
+    "maintenance": {
+      "title": "Saqlash",
+      "desc": "Sog'lom va doimiy bo'lish uchun muvozanatli makroslar."
+    },
+    "supplements": "Qo'shimchalar",
+    "whey_protein": {
+      "name": "Whey Protein",
+      "benefits": "Mushaklarni tiklash va o'stirish."
+    },
+    "creatine": {
+      "name": "Kreatin Monogidrat",
+      "benefits": "Kuch va mushak hajmini oshirish."
+    },
+    "multivitamin": {
+      "name": "Multivitaminlar",
+      "benefits": "Umumiy salomatlik va immunitetni qo'llab-quvvatlash."
+    },
+    "personal_plan": "Shaxsiy parhez rejasini oling",
+    "custom_meal_plans": "Sizning tanangiz va maqsadingizga asoslangan maxsus ovqatlanish rejalari.",
+    "unlock_premium": "Premiumga o'ting",
+    "calories_result": "Sizning kunlik kaloriyangiz: {calories} kkal",
+    "bmi_result": "BMI: {bmi} — {status}",
+    "bmi_status": {
+      "underweight": "Vazn yetishmovchiligi",
+      "normal": "Normal",
+      "overweight": "Ortiqcha vazn",
+      "obese": "Semizlik"
+    }
+  },
+  "languages": {
+    "uz": "O'zbekcha",
+    "en": "English",
+    "ru": "Русский",
+    "select_language": "Tilni tanlang"
+  },
+  "programs": {
+    "title": "Mashg'ulot dasturlari",
+    "subtitle": "Maqsadlaringiz uchun professional rejalar.",
+    "days": "{count} Kun",
+    "view_days": "Jadvalni ko'rish",
+    "start_session": "Mashg'ulotni boshlash",
+    "rest_time": "Dam olish vaqti",
+    "sec": "soniya",
+    "next": "Keyingi mashq",
+    "prev": "Oldingi",
+    "complete": "Setni yakunlash",
+    "skip": "O'tkazib yuborish",
+    "finish_session": "Mashg'ulotni tugatish",
+    "congratulations": "Tabriklaymiz!",
+    "session_complete_desc": "Siz bugungi mashg'ulotni muvaffaqiyatli yakunladingiz. Shunday davom eting!",
+    "back_to_programs": "Dasturlarga qaytish",
+    "sets_reps": "Setlar va takrorlar",
+    "up_next": "Keyingisi",
+    "xp_earned": "Ajoyib natija! Tajribangiz oshdi."
+  },
+  "exercises": {
+    "choose_section_highlight": "BO'LIMNI TANLANG",
+    "choose_section_text": "MASHG'ULOTNI BOSHLASH UCHUN",
+    "detail": {
+      "difficulty": "Qiyinchilik",
+      "equipment": "Jihozlar",
+      "duration": "Davomiyligi",
+      "how_to": "Qanday bajariladi",
+      "instructions": "Ko'rsatmalar",
+      "muscles": "Maqsadli mushaklar",
+      "sets": "Tavsiya etilgan setlar",
+      "mistakes": "Keng tarqalgan xatolar",
+      "next": "Keyingi mashq",
+      "not_found": "Mashq topilmadi.",
+      "go_back": "Ortga qaytish"
+    }
+  },
+  "reset_password": {
+    "request_title": "Parolni unutdingizmi?",
+    "request_subtitle": "Email manzilingizni kiriting, biz sizga kod yuboramiz",
+    "confirm_title": "Parolni tiklash",
+    "confirm_subtitle": "Emaildagi kodni va yangi parolni kiriting",
+    "btn_request": "Kod yuborish",
+    "btn_confirm": "Yangi parol o'rnatish"
+  },
+  "common": {
+    "back": "Orqaga",
+    "forgot_password": "Parolni unutdingizmi?",
+    "lang": "Til"
+  }
+}

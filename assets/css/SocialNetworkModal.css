@@ -1,0 +1,95 @@
+.social-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(255, 255, 255, 0.1);
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    backdrop-filter: blur(10px);
+    z-index: 50;
+    overflow-y: auto;
+}
+
+.social-content {
+    background-color: #222222;
+    border-radius: 1rem 1rem 0 0;
+    padding: 26px 16px 16px 16px;
+    width: 100%;
+    max-width: 500px;
+    height: 40%;
+}
+
+.social-header {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.social-body {
+    display: flex;
+    margin: auto;
+    justify-content: center;
+}
+
+.social-item {
+    margin-left: 1rem;
+}
+
+.social-title {
+    color: white;
+    font-size: 1.5rem;
+    font-weight: regular;
+}
+
+.social-text {
+    color: white;
+    font-size: 1.2rem;
+    font-weight: regular;
+}
+
+.social-close-btn {
+    color: white;
+    font-size: 2rem;
+    font-weight: regular;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    margin-top: -1rem;
+}
+
+.pereyti-btn {
+    background-color: #00CFFF;
+    color: white;
+    padding: 10px;
+    border-radius: 10px;
+    margin-top: 2rem;
+    text-align: center;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.2s ease;
+}
+
+.pereyti-btn:hover {
+    background-color: #00bbff;
+}
+
+.fade-scale-enter-active,
+.fade-scale-leave-active {
+    transition: all 0.3s ease;
+}
+
+.fade-scale-enter-from,
+.fade-scale-leave-to {
+    opacity: 0;
+    transform: scale(0.95);
+}
+
+.fade-scale-enter-to,
+.fade-scale-leave-from {
+    opacity: 1;
+    transform: scale(1);
+}

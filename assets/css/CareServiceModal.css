@@ -1,0 +1,92 @@
+.care-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(255, 255, 255, 0.1);
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    backdrop-filter: blur(10px);
+    z-index: 50;
+    overflow-y: auto;
+}
+
+.care-content {
+    background-color: #222222;
+    border-radius: 1rem 1rem 0 0;
+    padding: 35px 16px 16px 16px;
+    width: 100%;
+    max-width: 500px;
+    height: 60%;
+}
+
+.care-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 16px;
+}
+
+.care-main {
+    /* margin-bottom: 1.5rem; */
+}
+
+.care-title {
+    color: white;
+    font-size: 24px;
+    font-weight: regular;
+}
+
+.care-text {
+    color: white;
+    font-size: 16px;
+    font-weight: regular;
+}
+
+.close-btn {
+    color: white;
+    font-weight: regular;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.pereyti-btn {
+    display: block;
+    width: 100%;
+    background: #00CFFF;
+    color: white;
+    padding: 0.75rem;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    text-align: center;
+    font-family: 'Gropled', sans-serif !important;
+    font-size: 20px;
+    letter-spacing: 1.2px;
+}
+
+.pereyti-btn:hover {
+    background-color: #00bbff;
+}
+
+.fade-scale-enter-active,
+.fade-scale-leave-active {
+    transition: all 0.3s ease;
+}
+
+.fade-scale-enter-from,
+.fade-scale-leave-to {
+    opacity: 0;
+    transform: scale(0.95);
+}
+
+.fade-scale-enter-to,
+.fade-scale-leave-from {
+    opacity: 1;
+    transform: scale(1);
+}

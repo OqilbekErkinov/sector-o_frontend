@@ -1,0 +1,241 @@
+.nutrition-page {
+  background-color: #222222;
+  color: white;
+  padding-bottom: 80px;
+  max-width: 450px !important;
+  padding: 14px !important;
+  margin: auto;
+  /* padding-top: 0 !important; */
+}
+
+h1 {
+  font-family: 'Gropled', sans-serif;
+  font-size: 32px;
+  margin-bottom: 10px;
+  background: linear-gradient(90deg, #ffffff, #00CFFF);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.subtitle {
+  color: #aaaaaa;
+  font-size: 14px;
+  margin-bottom: 30px;
+}
+
+.section {
+  margin-top: 40px;
+}
+
+.section h2 {
+  font-family: 'Gropled', sans-serif;
+  font-size: 20px;
+  margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+/* PREMIUM GLASS CARD */
+.glass-card {
+  background: rgba(255, 255, 255, 0.03);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 24px;
+  padding: 24px;
+  margin-bottom: 20px;
+  transition: 0.3s;
+}
+
+.glass-card:hover {
+  border-color: rgba(0, 207, 255, 0.3);
+}
+
+/* INPUTS */
+.input-group {
+  margin-bottom: 15px;
+}
+
+.input-label {
+  display: block;
+  font-size: 12px;
+  color: #888;
+  margin-bottom: 6px;
+  margin-left: 4px;
+}
+
+input,
+select {
+  width: 100%;
+  background: #1c1c1c;
+  border: 1px solid #333;
+  color: white;
+  padding: 14px;
+  border-radius: 14px;
+  font-size: 15px;
+  transition: 0.3s;
+}
+
+input:focus,
+select:focus {
+  outline: none;
+  border-color: #00CFFF;
+  background: #222;
+}
+
+/* BMI METER */
+.bmi-meter-container {
+  margin-top: 20px;
+}
+
+.bmi-bar {
+  height: 8px;
+  background: #222;
+  border-radius: 4px;
+  overflow: hidden;
+  display: flex;
+  margin-bottom: 15px;
+}
+
+.bmi-segment {
+  height: 100%;
+}
+
+.bmi-segment.under {
+  background: #ffcc00;
+  width: 25%;
+}
+
+.bmi-segment.normal {
+  background: #00ffcc;
+  width: 25%;
+}
+
+.bmi-segment.over {
+  background: #ff9900;
+  width: 25%;
+}
+
+.bmi-segment.obese {
+  background: #ff3300;
+  width: 25%;
+}
+
+/* CALCULATE BUTTONS */
+.btn-calc {
+  width: 100%;
+  padding: 16px;
+  border-radius: 16px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  cursor: pointer;
+  transition: 0.3s;
+  border: none;
+}
+
+.btn-calc.primary {
+  background: #00CFFF;
+  color: black;
+}
+
+.btn-calc.secondary {
+  background: transparent;
+  border: 1px solid #00CFFF;
+  color: #00CFFF;
+}
+
+.btn-calc:active {
+  transform: scale(0.98);
+}
+
+/* DIET & SUPPLEMENT CARDS */
+.diet-item {
+  display: flex;
+  gap: 16px;
+  align-items: flex-start;
+  margin-bottom: 20px;
+}
+
+.icon-box {
+  background: rgba(0, 207, 255, 0.1);
+  color: #00CFFF;
+  padding: 12px;
+  border-radius: 16px;
+  font-size: 20px;
+  min-width: 48px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.diet-content h3 {
+  font-size: 17px;
+  margin-bottom: 4px;
+}
+
+.diet-content p {
+  font-size: 13px;
+  color: #999;
+}
+
+/* GOALS */
+.goal-tabs {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 15px;
+}
+
+.goal-tab {
+  flex: 1;
+  padding: 12px;
+  background: #1c1c1c;
+  border: 1px solid #333;
+  border-radius: 14px;
+  text-align: center;
+  font-size: 13px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.goal-tab.active {
+  background: #00CFFF;
+  color: black;
+  border-color: #00CFFF;
+}
+
+/* PREMIUM PROMO */
+.premium-promo {
+  background: linear-gradient(135deg, #00CFFF 0%, #002b36 100%);
+  border-radius: 30px;
+  padding: 30px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+  margin-top: 50px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.premium-promo h3 {
+  font-family: 'Gropled', sans-serif;
+  font-size: 24px;
+  margin-bottom: 12px;
+}
+
+.premium-promo p {
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.8);
+  margin-bottom: 24px;
+}
+
+/* ANIMATIONS */
+.reveal {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: all 0.6s ease-out;
+}
+
+.reveal.active {
+  opacity: 1;
+  transform: translateY(0);
+}

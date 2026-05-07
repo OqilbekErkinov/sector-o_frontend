@@ -1,0 +1,216 @@
+.programs-page {
+  /* padding-bottom: 90px; */
+  background-color: #222222;
+  color: white;
+  min-height: 100vh;
+  max-width: 450px !important;
+  padding: 14px !important;
+  margin: auto;
+  /* padding-top: 0 !important; */
+}
+
+.title {
+  font-family: 'Gropled', sans-serif;
+  font-size: 32px;
+  background: linear-gradient(90deg, #fff, #00CFFF);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  margin-bottom: 8px;
+}
+
+.subtitle {
+  color: #888;
+  font-size: 14px;
+  margin-bottom: 30px;
+}
+
+/* CARDS */
+.program-grid {
+  display: grid;
+  gap: 24px;
+}
+
+.program-card {
+  position: relative;
+  height: 200px;
+  border-radius: 28px;
+  overflow: hidden;
+  cursor: pointer;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+}
+
+.program-card:hover {
+  transform: translateY(-8px) scale(1.02);
+  border-color: #00CFFF;
+  box-shadow: 0 20px 40px rgba(0, 207, 255, 0.15);
+}
+
+.program-card img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.6s ease;
+  border-radius: 20px;
+}
+
+.program-card:hover img {
+  transform: scale(1.18);
+}
+
+.program-card .overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.95) 0%, rgba(0, 0, 0, 0.2) 60%);
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+}
+
+.program-card h3 {
+  font-family: 'Gropled', sans-serif;
+  font-size: 22px;
+  margin: 0 0 4px 0;
+  color: #fff;
+}
+
+.program-card p {
+  color: rgba(255, 255, 255, 0.6);
+  font-size: 13px;
+  margin: 0;
+}
+
+.program-card .badge {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  padding: 6px 14px;
+  border-radius: 14px;
+  font-size: 10px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  backdrop-filter: blur(10px);
+  z-index: 10;
+}
+
+.badge.beginner {
+  background: rgba(0, 207, 255, 0.9);
+  color: black;
+}
+
+.badge.intermediate {
+  background: rgba(255, 174, 0, 0.9);
+  color: black;
+}
+
+.badge.advanced {
+  background: rgba(255, 59, 59, 0.9);
+  color: white;
+}
+
+/* DAY LIST */
+.day-list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.day-card {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  padding: 22px;
+  border-radius: 24px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.day-card:hover {
+  background: rgba(0, 207, 255, 0.05);
+  border-color: rgba(0, 207, 255, 0.4);
+  transform: translateX(5px);
+}
+
+.day-card.rest-day {
+  opacity: 0.7;
+  background: rgba(255, 255, 255, 0.01);
+  cursor: default;
+}
+
+.day-card.rest-day:hover {
+  transform: none;
+  border-color: rgba(255, 255, 255, 0.1);
+}
+
+.day-info h4 {
+  font-family: 'Futura PT', sans-serif;
+  font-size: 17px;
+  margin: 0 0 4px 0;
+  font-weight: 700;
+}
+
+.day-info p {
+  font-size: 12px;
+  color: #888;
+  margin: 0;
+}
+
+.nav-back {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: #00CFFF;
+  font-size: 14px;
+  margin-bottom: 20px;
+  cursor: pointer;
+}
+
+/* EXERCISE LIST */
+.exercise-list-small {
+  margin-top: 20px;
+}
+
+.ex-small-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px;
+  background: rgba(255, 255, 255, 0.03);
+  border-radius: 16px;
+  margin-bottom: 10px;
+}
+
+.ex-small-item img {
+  width: 50px;
+  height: 50px;
+  border-radius: 12px;
+  object-fit: cover;
+}
+
+.ex-small-info h5 {
+  font-size: 14px;
+  margin: 0;
+}
+
+.ex-small-info p {
+  font-size: 11px;
+  color: #666;
+  margin: 0;
+}
+
+/* REVEAL ANIMATION */
+.reveal {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: all 0.6s ease-out;
+}
+
+.reveal.active {
+  opacity: 1;
+  transform: translateY(0);
+}
