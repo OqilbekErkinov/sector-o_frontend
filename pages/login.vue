@@ -257,18 +257,24 @@ async function handleVerify() {
   background: rgba(255,255,255,0.06);
   border-radius: 30px;
   padding: 4px;
+  flex-shrink: 0;
 }
 
 .lang-pill {
-  padding: 6px 16px;
+  padding: 8px 20px;
+  min-width: 52px;
   border-radius: 24px;
   border: none;
   background: transparent;
   color: rgba(255,255,255,0.45);
-  font-size: 13px;
+  font-size: 14px;
   font-weight: 500;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif !important;
+  letter-spacing: 0.3px;
   cursor: pointer;
   transition: all 0.2s ease;
+  text-align: center;
+  white-space: nowrap;
 }
 
 .lang-pill.active {

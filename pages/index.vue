@@ -188,7 +188,7 @@ const { hapticLight } = useHaptic();
 
 // SEO Optimization
 useSeoMeta({
-  title: 'Sector-O - Your Personal AI Trainer',
+  title: 'Sector-O - Your Personal Trainer',
   ogTitle: 'Sector-O - Transform Your Body',
   description: 'Personalized workouts and recovery plans tailored just for you.',
   ogDescription: 'Sector-O fuels your journey, turning sweat into strength.',
