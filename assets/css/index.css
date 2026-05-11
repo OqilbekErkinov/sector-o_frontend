@@ -3,8 +3,45 @@
   font-weight: 700;
   font-style: normal;
   font-display: swap;
-  src: url('/fonts/Gropled-Bold.otf') format('opentype');
+  src: url('/fonts/Gropled-Bold.woff2') format('woff2'),
+       url('/fonts/Gropled-Bold.otf') format('opentype');
+  ascent-override: 115%;
+}
 
+@font-face {
+  font-family: 'Futura PT';
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+  src: url('/fonts/FuturaCyrillicLight.woff2') format('woff2'),
+       url('/fonts/FuturaCyrillicLight.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'Futura PT';
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+  src: url('/fonts/FuturaCyrillicBook.woff2') format('woff2'),
+       url('/fonts/FuturaCyrillicBook.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'Futura PT';
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+  src: url('/fonts/FuturaCyrillicMedium.woff2') format('woff2'),
+       url('/fonts/FuturaCyrillicMedium.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'Futura PT';
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+  src: url('/fonts/FuturaCyrillicDemi.woff2') format('woff2'),
+       url('/fonts/FuturaCyrillicDemi.ttf') format('truetype');
 }
 
 @font-face {
@@ -12,13 +49,26 @@
   font-weight: 700;
   font-style: normal;
   font-display: swap;
-  src: url('/fonts/FuturaCyrillicBold.ttf') format('ttf'),
-    url('/fonts/FuturaCyrillicBook.ttf') format('ttf'),
-    url('/fonts/FuturaCyrillicDemi.ttf') format('ttf'),
-    url('/fonts/FuturaCyrillicExtraBold.ttf') format('ttf'),
-    url('/fonts/FuturaCyrillicHeavy.ttf') format('ttf'),
-    url('/fonts/FuturaCyrillicLight.ttf') format('ttf'),
-    url('/fonts/FuturaCyrillicMedium.ttf') format('ttf');
+  src: url('/fonts/FuturaCyrillicBold.woff2') format('woff2'),
+       url('/fonts/FuturaCyrillicBold.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'Futura PT';
+  font-weight: 800;
+  font-style: normal;
+  font-display: swap;
+  src: url('/fonts/FuturaCyrillicExtraBold.woff2') format('woff2'),
+       url('/fonts/FuturaCyrillicExtraBold.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'Futura PT';
+  font-weight: 900;
+  font-style: normal;
+  font-display: swap;
+  src: url('/fonts/FuturaCyrillicHeavy.woff2') format('woff2'),
+       url('/fonts/FuturaCyrillicHeavy.ttf') format('truetype');
 }
 
 * {
@@ -195,4 +245,22 @@ button:active {
 .layout-leave-to {
   opacity: 0;
   filter: blur(5px);
+}
+
+/* =============================================
+   GROPLED FONT — GLOBAL ANTI-CLIPPING FIX
+   The Gropled font's capital letters extend beyond
+   the font's ascent metrics, causing top clipping
+   on Android/mobile browsers. These rules add
+   breathing room above text to prevent clipping.
+   ============================================= */
+.hero-title,
+.profile-title,
+.style-heading,
+.section-title,
+.premium-name,
+.error-content h2 {
+  padding-top: 0.15em;
+  line-height: 1.35;
+  overflow: visible;
 }

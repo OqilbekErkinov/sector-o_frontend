@@ -9,12 +9,6 @@ useHead({
       integrity: "sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH",
       crossorigin: "anonymous"
     },
-    {
-      href: "https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap",
-      rel: "stylesheet",
-      media: "print",
-      onload: "this.media='all'"
-    },
     { rel: "preconnect", href: "https://fonts.googleapis.com" },
     { rel: "preconnect", href: "https://fonts.gstatic.com", crossorigin: "anonymous" },
   ],
@@ -44,8 +38,7 @@ onMounted(async () => {
     <main>
       <slot />
     </main>
-    <Menu v-if="route.path !== '/downloading' && route.path !== '/success'"
-      :class="{ 'fixed-footer': route.path === '/styles-pro' || route.path === '/creator' || route.path === '/creator-pro'}" />
+    <Menu v-if="!['/login', '/register'].includes(route.path)" />
   </div>
 </template>
 

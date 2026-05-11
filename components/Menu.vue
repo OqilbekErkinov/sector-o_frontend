@@ -17,7 +17,7 @@
                 </svg>
             </NuxtLink>
             <NuxtLink @click="hapticLight" to="/programs" :class="{ active: ['/programs', '/training'].includes($route.path) }" aria-label="Styles">
-                <NuxtImg format="webp" style="margin-top: -1.2rem; width: 55px;"
+                <NuxtImg format="webp" style="margin-top: -2.4rem; width: 55px;"
                     :src="['/programs', '/training'].includes($route.path) ? '/images/logo4.png' : '/images/logo3.png'"
                     alt="Logo" />
             </NuxtLink>

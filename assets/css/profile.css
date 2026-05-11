@@ -16,8 +16,9 @@
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     letter-spacing: 1.5px;
-    /* text-transform: uppercase; */
-
+    padding-top: 0.15em;
+    line-height: 1.35;
+    overflow: visible;
 }
 
 .profile-photo {

@@ -15,6 +15,9 @@ h1 {
   background: linear-gradient(90deg, #ffffff, #00CFFF);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
+  padding-top: 0.15em;
+  line-height: 1.35;
+  overflow: visible;
 }
 
 .subtitle {
@@ -24,7 +27,7 @@ h1 {
 }
 
 .section {
-  margin-top: 40px;
+  margin-top: 20px;
 }
 
 .section h2 {
@@ -34,6 +37,9 @@ h1 {
   display: flex;
   align-items: center;
   gap: 10px;
+  padding-top: 0.1em;
+  line-height: 1.35;
+  overflow: visible;
 }
 
 /* PREMIUM GLASS CARD */
@@ -149,34 +155,135 @@ select:focus {
   transform: scale(0.98);
 }
 
-/* DIET & SUPPLEMENT CARDS */
-.diet-item {
-  display: flex;
-  gap: 16px;
-  align-items: flex-start;
-  margin-bottom: 20px;
+/* DAILY DIET — UNIFIED CARD */
+.diet-unified-card {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(0, 207, 255, 0.25);
+  border-radius: 20px;
+  padding: 8px 16px;
+  transition: border-color 0.3s;
 }
 
-.icon-box {
-  background: rgba(0, 207, 255, 0.1);
-  color: #00CFFF;
-  padding: 12px;
-  border-radius: 16px;
-  font-size: 20px;
-  min-width: 48px;
+.diet-unified-card:hover {
+  border-color: rgba(0, 207, 255, 0.45);
+}
+
+.diet-row {
   display: flex;
-  justify-content: center;
   align-items: center;
+  gap: 16px;
+  padding: 18px 0;
 }
 
-.diet-content h3 {
-  font-size: 17px;
-  margin-bottom: 4px;
+.diet-row:not(:last-child) {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
 }
 
-.diet-content p {
+.diet-icon-box {
+  width: 50px;
+  height: 50px;
+  min-width: 50px;
+  background: rgba(0, 207, 255, 0.08);
+  border-radius: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 22px;
+}
+
+.diet-row-info h4 {
+  font-size: 16px;
+  font-weight: 700;
+  margin: 0 0 4px 0;
+  color: #fff;
+}
+
+.diet-row-info p {
   font-size: 13px;
   color: #999;
+  margin: 0;
+  line-height: 1.4;
+}
+
+/* SUPPLEMENTS — ACCORDION */
+.supplement-accordion {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.supplement-item {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 16px;
+  overflow: hidden;
+  transition: border-color 0.3s, background 0.3s;
+}
+
+.supplement-item.expanded {
+  border-color: rgba(0, 207, 255, 0.3);
+  background: rgba(0, 207, 255, 0.04);
+}
+
+.supplement-header {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 18px;
+  background: none;
+  border: none;
+  color: #fff;
+  cursor: pointer;
+  font-size: 15px;
+  font-weight: 600;
+  transition: color 0.2s;
+}
+
+.supplement-header:active {
+  opacity: 0.7;
+}
+
+.supplement-item.expanded .supplement-name {
+  color: #00CFFF;
+}
+
+.supplement-chevron {
+  color: #666;
+  transition: transform 0.3s ease, color 0.3s;
+  flex-shrink: 0;
+}
+
+.supplement-chevron.rotated {
+  transform: rotate(180deg);
+  color: #00CFFF;
+}
+
+.supplement-body {
+  padding: 0 18px 16px;
+}
+
+.supplement-body p {
+  font-size: 13px;
+  color: #999;
+  margin: 0;
+  line-height: 1.5;
+}
+
+/* Accordion transition */
+.accordion-enter-active,
+.accordion-leave-active {
+  transition: all 0.3s ease;
+  max-height: 200px;
+  overflow: hidden;
+}
+
+.accordion-enter-from,
+.accordion-leave-to {
+  max-height: 0;
+  opacity: 0;
+  padding-top: 0;
+  padding-bottom: 0;
 }
 
 /* GOALS */

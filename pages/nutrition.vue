@@ -2,7 +2,7 @@
   <div class="nutrition-page container py-4">
     <header class="reveal">
       <h1>{{ $t('nutrition.title') }}</h1>
-      <p class="subtitle">{{ $t('nutrition.subtitle') }}</p>
+      <!-- <p class="subtitle">{{ $t('nutrition.subtitle') }}</p> -->
     </header>
 
     <!-- 📊 CALORIE CALCULATOR -->
@@ -82,20 +82,20 @@
     <!-- 🍎 DAILY DIET -->
     <section class="section reveal">
       <h2>🥗 {{ $t('nutrition.daily_diet') }}</h2>
-      <div class="diet-grid">
-        <template v-if="fitness.loading.value">
-          <Skeleton v-for="i in 4" :key="i" height="120px" borderRadius="15px" style="margin-bottom: 12px" />
-        </template>
-        <template v-else>
-          <div v-for="(item, i) in diets" :key="i" class="diet-card reveal">
-            <div class="diet-icon">{{ item.icon }}</div>
-            <div class="diet-info">
+      <template v-if="fitness.loading.value">
+        <Skeleton height="280px" borderRadius="20px" />
+      </template>
+      <template v-else>
+        <div class="diet-unified-card">
+          <div v-for="(item, i) in diets" :key="i" class="diet-row">
+            <div class="diet-icon-box">{{ item.icon }}</div>
+            <div class="diet-row-info">
               <h4>{{ t(item, 'title') }}</h4>
               <p>{{ t(item, 'description') }}</p>
             </div>
           </div>
-        </template>
-      </div>
+        </div>
+      </template>
     </section>
 
     <!-- SUPPLEMENTS (DYNAMIC) -->
@@ -137,21 +137,31 @@
     <!-- 💊 SUPPLEMENTS (DYNAMIC) -->
     <section class="section reveal" v-if="supplements.length > 0 || fitness.loading.value">
       <h2>💊 {{ $t('nutrition.supplements') }}</h2>
-      <div class="row g-3">
-        <template v-if="fitness.loading.value">
-           <div class="col-12" v-for="i in 3" :key="'sup'+i">
-             <Skeleton height="80px" borderRadius="12px" />
-           </div>
-        </template>
-        <template v-else>
-          <div class="col-12" v-for="s in supplements" :key="s.id">
-            <div class="glass-card p-3 mb-0">
-              <h3 style="font-size: 16px; color: #00CFFF;">{{ t(s, 'name') }}</h3>
-              <p style="font-size: 13px; color: #999; margin: 0;">{{ t(s, 'benefits') }}</p>
-            </div>
+      <template v-if="fitness.loading.value">
+        <Skeleton v-for="i in 3" :key="'sup'+i" height="56px" borderRadius="16px" style="margin-bottom: 10px" />
+      </template>
+      <template v-else>
+        <div class="supplement-accordion">
+          <div
+            v-for="s in supplements"
+            :key="s.id"
+            class="supplement-item"
+            :class="{ expanded: expandedSupplement === s.id }"
+          >
+            <button class="supplement-header" @click="toggleSupplement(s.id)">
+              <span class="supplement-name">{{ t(s, 'name') }}</span>
+              <svg class="supplement-chevron" :class="{ rotated: expandedSupplement === s.id }" width="16" height="16" viewBox="0 0 16 16" fill="none">
+                <path d="M4 6L8 10L12 6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </button>
+            <transition name="accordion">
+              <div v-if="expandedSupplement === s.id" class="supplement-body">
+                <p>{{ t(s, 'benefits') }}</p>
+              </div>
+            </transition>
           </div>
-        </template>
-      </div>
+        </div>
+      </template>
     </section>
 
     <!-- 🌟 PREMIUM PROMO -->
@@ -198,6 +208,11 @@ const calories = ref(null)
 const bmi = ref(null)
 const bmiStatus = ref("")
 const selectedGoalKey = ref("maintenance")
+const expandedSupplement = ref(null)
+
+function toggleSupplement(id) {
+  expandedSupplement.value = expandedSupplement.value === id ? null : id
+}
 
 function calculateCalories() {
   if (!weight.value || !height.value || !age.value) return

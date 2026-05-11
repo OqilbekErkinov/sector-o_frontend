@@ -1,13 +1,9 @@
 export default defineNuxtConfig({
-  compatibilityDate: '2024-11-01',
+  compatibilityDate: '2026-01-12',
   devtools: { enabled: true },
   css: [
     "~/assets/css/index.css",
-    "~/assets/css/CareServiceModal.css",
-    "~/assets/css/CreditInfoModal.css",
-    "~/assets/css/LanguageModal.css",
     "~/assets/css/PaymentModal.css",
-    "~/assets/css/SocialNetworkModal.css",
     "~/assets/css/nutrition.css",
     "~/assets/css/premium-done.css",
     "~/assets/css/profile.css",
@@ -27,9 +23,9 @@ export default defineNuxtConfig({
       link: [
         {
           rel: 'preload',
-          href: '/fonts/Gropled-Bold.otf',
+          href: '/fonts/Gropled-Bold.woff2',
           as: 'font',
-          type: 'font/otf',
+          type: 'font/woff2',
           crossorigin: 'anonymous',
         },
       ],
