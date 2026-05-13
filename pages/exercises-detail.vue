@@ -26,8 +26,8 @@
     </div>
 
     <!-- VIDEO -->
-    <div class="video-box">
-      <iframe :src="exercise.video" frameborder="0" allowfullscreen>
+    <div class="video-box" v-if="exercise.video">
+      <iframe :src="getYouTubeEmbedUrl(exercise.video)" frameborder="0" allowfullscreen>
       </iframe>
     </div>
 
@@ -58,7 +58,7 @@
     <!-- SETS (Mocked or from API if added) -->
     <div class="section">
       <h2>🔢 {{ $t('exercises.detail.sets') }}</h2>
-      <p>3-4 sets, 8-12 reps</p>
+      <p>{{ exercise.recommended_sets || '3-4 sets, 8-12 reps' }}</p>
     </div>
 
     <!-- MISTAKES -->
@@ -98,7 +98,7 @@ const route = useRoute();
 const fitness = useFitness();
 const { t } = useLocalized();
 const { locale } = useI18n();
-const { getMediaUrl } = useApi();
+const { getMediaUrl, getYouTubeEmbedUrl } = useApi();
 
 const exerciseId = computed(() => route.query.id);
 const exercise = computed(() => fitness.getExerciseById(exerciseId.value));
@@ -146,6 +146,13 @@ function toggleFavorite() {
 
 onMounted(() => {
   checkFavorite();
+  // Increment views
+  if (exerciseId.value) {
+    const config = useRuntimeConfig();
+    $fetch(`${config.public.apiBase}/api/exercises/${exerciseId.value}/increment_views/`, {
+      method: 'POST'
+    }).catch(err => console.error('Failed to increment views:', err));
+  }
 });
 
 /* 🔥 NEXT EXERCISE LOGIC */

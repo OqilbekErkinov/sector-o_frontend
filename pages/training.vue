@@ -46,7 +46,7 @@
         <div class="exercise-media">
           <iframe 
             v-if="currentEx?.video" 
-            :src="currentEx.video.includes('youtube') ? currentEx.video + '?autoplay=1&mute=1&loop=1' : getMediaUrl(currentEx.video)"
+            :src="currentEx.video.includes('youtu') ? getYouTubeEmbedUrl(currentEx.video) + '?autoplay=1&mute=1&loop=1' : getMediaUrl(currentEx.video)"
             allow="autoplay; encrypted-media" 
             allowfullscreen>
           </iframe>
@@ -88,7 +88,7 @@ import { useAuth } from '~/composables/useAuth'
 const router = useRouter()
 const config = useRuntimeConfig()
 const { t } = useLocalized()
-const { getMediaUrl } = useApi()
+const { getMediaUrl, getYouTubeEmbedUrl } = useApi()
 const { token, user } = useAuth()
 
 /* STATE */

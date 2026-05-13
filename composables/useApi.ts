@@ -9,8 +9,20 @@ export const useApi = () => {
     return `${apiBase}${path.startsWith('/') ? '' : '/'}${path}`;
   };
 
+  const getYouTubeEmbedUrl = (url: string) => {
+    if (!url) return '';
+    const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/;
+    const match = url.match(regExp);
+
+    if (match && match[2].length >= 10) {
+      return `https://www.youtube.com/embed/${match[2]}`;
+    }
+    return url;
+  };
+
   return {
     apiBase,
-    getMediaUrl
+    getMediaUrl,
+    getYouTubeEmbedUrl
   };
 };

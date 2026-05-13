@@ -13,7 +13,22 @@
         </div>
         <div class="input-group">
           <label>{{ $t('register.password') }}</label>
-          <input v-model="password" type="password" :placeholder="$t('login.password_placeholder')" required />
+          <div class="password-wrapper">
+            <input v-model="password" :type="showPassword ? 'text' : 'password'" :placeholder="$t('login.password_placeholder')" required />
+            <button type="button" class="eye-btn" @click="showPassword = !showPassword">
+              <svg v-if="showPassword" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                <circle cx="12" cy="12" r="3"></circle>
+              </svg>
+              <svg v-else xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M2 10s3-3 10-3 10 3 10 3"/>
+                <path d="m5 11-1.5 1.5"/>
+                <path d="m9 8-1.5-2"/>
+                <path d="m14 8 1.5-2"/>
+                <path d="m19 11 1.5 1.5"/>
+              </svg>
+            </button>
+          </div>
           <NuxtLink to="/forgot-password" class="forgot-link">{{ $t('common.forgot_password') }}</NuxtLink>
         </div>
         
@@ -78,6 +93,7 @@ useHead({
 
 const email = ref('')
 const password = ref('')
+const showPassword = ref(false)
 const code = ref('')
 const error = ref('')
 const loading = ref(false)
@@ -311,6 +327,38 @@ async function handleVerify() {
 }
 
 .forgot-link:hover {
+  color: #00CFFF;
+}
+
+.password-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.password-wrapper input {
+  width: 100%;
+  padding-right: 50px !important;
+}
+
+.eye-btn {
+  position: absolute;
+  right: 15px;
+  background: none;
+  border: none;
+  color: #fff;
+  cursor: pointer;
+  padding: 5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+  opacity: 0.6;
+}
+
+.eye-btn:hover {
+  transform: scale(1.1);
+  opacity: 1;
   color: #00CFFF;
 }
 </style>

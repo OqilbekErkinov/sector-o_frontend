@@ -13,7 +13,9 @@ export const useFitness = () => {
   const getCategoryBySlug = (slug: string) => categories.value.find(c => c.slug === slug);
   const getExercisesByCategory = (categorySlug: string) => exercises.value.filter(ex => ex.category_slug === categorySlug);
   const getExerciseById = (id: number | string) => exercises.value.find(ex => ex.id == id);
-  const popularExercises = () => exercises.value.slice(0, 4);
+  const popularExercises = () => {
+    return [...exercises.value].sort((a, b) => (b.views || 0) - (a.views || 0)).slice(0, 4);
+  };
   const latestMotivation = () => motivation.value[0] || null;
 
   // Actions

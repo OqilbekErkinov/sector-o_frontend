@@ -16,7 +16,22 @@
 
         <div class="input-group">
           <label>{{ $t('register.password') }}</label>
-          <input v-model="form.password" type="password" placeholder="••••••••" required />
+          <div class="password-wrapper">
+            <input v-model="form.password" :type="showPassword ? 'text' : 'password'" placeholder="••••••••" required />
+            <button type="button" class="eye-btn" @click="showPassword = !showPassword">
+              <svg v-if="showPassword" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                <circle cx="12" cy="12" r="3"></circle>
+              </svg>
+              <svg v-else xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M2 10s3-3 10-3 10 3 10 3"/>
+                <path d="m5 11-1.5 1.5"/>
+                <path d="m9 8-1.5-2"/>
+                <path d="m14 8 1.5-2"/>
+                <path d="m19 11 1.5 1.5"/>
+              </svg>
+            </button>
+          </div>
         </div>
         
         <div v-if="error" class="error-msg">{{ error }}</div>
@@ -24,6 +39,10 @@
         
         <button type="submit" class="auth-btn primary" :disabled="loading">
           {{ loading ? $t('register.verifying') : $t('reset_password.btn_confirm') }}
+        </button>
+
+        <button type="button" @click="router.push('/login')" class="auth-btn secondary mt-2">
+          {{ $t('common.back') }}
         </button>
       </form>
     </div>
@@ -49,6 +68,7 @@ const form = reactive({
 const error = ref('')
 const message = ref('')
 const loading = ref(false)
+const showPassword = ref(false)
 
 async function handleReset() {
   error.value = ''
@@ -73,7 +93,6 @@ async function handleReset() {
 </script>
 
 <style scoped>
-/* Reuse login styles */
 @import "~/assets/css/index.css";
 
 .auth-page {
@@ -89,6 +108,11 @@ async function handleReset() {
   max-width: 420px;
   padding: 40px;
   animation: fadeIn 0.8s ease-out forwards;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 
 .auth-title {
@@ -137,6 +161,38 @@ async function handleReset() {
   border-radius: 16px;
   padding: 12px 20px;
   color: #fff;
+  width: 100%;
+}
+
+.password-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.password-wrapper input {
+  padding-right: 50px !important;
+}
+
+.eye-btn {
+  position: absolute;
+  right: 15px;
+  background: none;
+  border: none;
+  color: #fff;
+  cursor: pointer;
+  padding: 5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+  opacity: 0.6;
+}
+
+.eye-btn:hover {
+  transform: scale(1.1);
+  opacity: 1;
+  color: #00CFFF;
 }
 
 .auth-btn {
@@ -145,10 +201,29 @@ async function handleReset() {
   border: none;
   font-weight: 600;
   cursor: pointer;
+  transition: all 0.3s ease;
 }
 
 .auth-btn.primary {
   background: #00CFFF;
+  color: #000;
+}
+
+.auth-btn.primary:hover {
+  background: #00aacc;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(0, 207, 255, 0.3);
+}
+
+.auth-btn.secondary {
+  background: transparent;
+  color: #ccc;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.auth-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
 }
 
 .error-msg {
@@ -165,5 +240,9 @@ async function handleReset() {
   padding: 10px;
   border-radius: 8px;
   text-align: center;
+}
+
+.mt-2 {
+  margin-top: 8px;
 }
 </style>
