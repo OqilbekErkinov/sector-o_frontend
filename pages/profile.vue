@@ -208,6 +208,37 @@
                 </div>
             </transition>
             
+            <NuxtLink to="/rankings" class="menu-item" style="text-decoration: none;">
+                <div class="menu-text">
+                    <svg class="me-2" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#00CFFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
+                    </svg>
+                    <span style="color: #fff;">{{ $t('profile.rankings') || 'Reyting' }}</span>
+                </div>
+                <div class="menu-arrow">
+                    <svg width="8" height="14" viewBox="0 0 8 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M1 1L7 7L1 13" stroke="white" stroke-linecap="round" />
+                    </svg>
+                </div>
+            </NuxtLink>
+
+            <NuxtLink to="/chat" class="menu-item" style="text-decoration: none;">
+                <div class="menu-text">
+                    <svg class="me-2" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#00CFFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+                    </svg>
+                    <span style="color: #fff;">{{ $t('profile.chat') || 'Xabarlar' }}</span>
+                    <span v-if="user?.unread_conversations_count > 0" class="chat-badge">
+                        {{ user.unread_conversations_count }}
+                    </span>
+                </div>
+                <div class="menu-arrow">
+                    <svg width="8" height="14" viewBox="0 0 8 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M1 1L7 7L1 13" stroke="white" stroke-linecap="round" />
+                    </svg>
+                </div>
+            </NuxtLink>
+            
             <div class="menu-item" @click="handleLogout">
                 <div class="menu-text" style="color: #ff4d4d">
                     <svg class="me-2" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#ff4d4d" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -305,4 +336,16 @@ const deletePhoto = async () => {
 
 <style scoped>
 @import "~/assets/css/profile.css";
+
+.chat-badge {
+    background: #00CFFF;
+    color: #000;
+    font-size: 11px;
+    font-weight: 800;
+    padding: 2px 6px;
+    border-radius: 10px;
+    min-width: 20px;
+    text-align: center;
+    margin-left: 0.5rem;
+}
 </style>

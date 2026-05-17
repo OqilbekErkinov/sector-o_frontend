@@ -34,7 +34,15 @@
     "edit_weekly_goal_placeholder": "Necha kun shug'ullanasiz? (1-7)",
     "change_photo": "Rasmni o'zgartirish",
     "delete_photo": "Rasmni o'chirish",
-    "saving": "Saqlanmoqda..."
+    "saving": "Saqlanmoqda...",
+    "rankings": "Reyting",
+    "chat": "Xabarlar"
+  },
+  "chat": {
+    "my_messages": "Mening xabarlarim",
+    "search_by_email": "Email orqali izlash...",
+    "no_messages": "Sizda hozircha suhbatlar yo'q. Boshlash uchun email kiriting.",
+    "type_message": "Xabar yozing..."
   },
   "payment": {
     "title": "To'lov turini tanlang"
@@ -170,7 +178,13 @@
       "normal": "Normal",
       "overweight": "Ortiqcha vazn",
       "obese": "Semizlik"
-    }
+    },
+    "more_info": "Batafsil ma'lumot",
+    "main_functions": "Asosiy vazifalari",
+    "origin": "Kelib chiqishi",
+    "dosage": "Doza",
+    "timing": "Qabul qilish vaqti",
+    "sources": "Ilmiy manbalar"
   },
   "languages": {
     "uz": "O'zbekcha",

@@ -157,6 +157,9 @@
             <transition name="accordion">
               <div v-if="expandedSupplement === s.id" class="supplement-body">
                 <p>{{ t(s, 'benefits') }}</p>
+                <NuxtLink :to="`/supplements/${s.id}`" class="btn-calc primary mt-3" style="display: block; text-align: center; text-decoration: none; padding: 12px; font-size: 15px; border-radius: 12px;">
+                  {{ $t('nutrition.more_info') || 'To\'liq ma\'lumot' }}
+                </NuxtLink>
               </div>
             </transition>
           </div>

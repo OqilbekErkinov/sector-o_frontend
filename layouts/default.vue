@@ -38,7 +38,7 @@ onMounted(async () => {
     <main>
       <slot />
     </main>
-    <Menu v-if="!['/login', '/register'].includes(route.path)" />
+    <Menu v-if="!['/login', '/register'].includes(route.path) && !route.path.startsWith('/chat/')" />
   </div>
 </template>
 

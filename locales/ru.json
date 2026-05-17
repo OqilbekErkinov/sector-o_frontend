@@ -34,7 +34,15 @@
     "edit_weekly_goal_placeholder": "Сколько дней тренируетесь? (1-7)",
     "change_photo": "Изменить фото",
     "delete_photo": "Удалить фото",
-    "saving": "Сохранение..."
+    "saving": "Сохранение...",
+    "rankings": "Рейтинг",
+    "chat": "Сообщения"
+  },
+  "chat": {
+    "my_messages": "Мои сообщения",
+    "search_by_email": "Поиск по email...",
+    "no_messages": "У вас пока нет бесед. Введите email для начала.",
+    "type_message": "Введите сообщение..."
   },
   "payment": {
     "title": "Выберите тип оплаты"
@@ -170,7 +178,13 @@
       "normal": "Норма",
       "overweight": "Избыточный вес",
       "obese": "Ожирение"
-    }
+    },
+    "more_info": "Подробнее",
+    "main_functions": "Основные функции",
+    "origin": "Происхождение",
+    "dosage": "Дозировка",
+    "timing": "Время приема",
+    "sources": "Научные источники"
   },
   "languages": {
     "uz": "O'zbekcha",

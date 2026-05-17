@@ -34,7 +34,15 @@
     "edit_weekly_goal_placeholder": "How many days do you train? (1-7)",
     "change_photo": "Change photo",
     "delete_photo": "Delete photo",
-    "saving": "Saving..."
+    "saving": "Saving...",
+    "rankings": "Rankings",
+    "chat": "Messages"
+  },
+  "chat": {
+    "my_messages": "My Messages",
+    "search_by_email": "Search by email...",
+    "no_messages": "You have no conversations yet. Enter a user's email to start.",
+    "type_message": "Type a message..."
   },
   "payment": {
     "title": "Choose payment method"
@@ -170,7 +178,13 @@
       "normal": "Normal",
       "overweight": "Overweight",
       "obese": "Obese"
-    }
+    },
+    "more_info": "More Info",
+    "main_functions": "Main Functions",
+    "origin": "Origin",
+    "dosage": "Dosage",
+    "timing": "Timing",
+    "sources": "Scientific Sources"
   },
   "languages": {
     "uz": "O'zbekcha",
