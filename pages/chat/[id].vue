@@ -193,19 +193,28 @@ function scrollToBottom() {
   });
 }
 
-onMounted(() => {
+onMounted(async () => {
   // Remove global padding-bottom for this page
   document.body.style.setProperty('padding-bottom', '0', 'important');
-  
+
   fetchInitialData();
-  
-  // WebSocket ulanish
-  const token = useCookie('auth_token').value;
-  if (token) {
-    const config = useRuntimeConfig();
+
+  // WebSocket ulanish — uzoq muddatli JWT o'rniga bir martalik, qisqa
+  // muddatli "ticket" ishlatamiz, shunda token URL/serverlogda qolmaydi
+  if (token.value) {
+    let ticket;
+    try {
+      ({ ticket } = await $fetch(`${config.public.apiBase}/api/chat/ws-ticket/`, {
+        method: 'POST',
+        headers: { Authorization: `Bearer ${token.value}` }
+      }));
+    } catch (e) {
+      console.error("WebSocket ticket olishda xatolik:", e);
+      return;
+    }
     const wsBase = config.public.apiBase.replace('http', 'ws').replace('/api', '');
-    ws = new WebSocket(`${wsBase}/ws/chat/?token=${token}`);
-    
+    ws = new WebSocket(`${wsBase}/ws/chat/?ticket=${ticket}`);
+
     ws.onmessage = (event) => {
       const data = JSON.parse(event.data);
       if (data.type === 'new_message') {

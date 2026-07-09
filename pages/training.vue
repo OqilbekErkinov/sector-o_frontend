@@ -189,10 +189,18 @@ function goHome() {
 /* LIFECYCLE */
 onMounted(() => {
     const saved = localStorage.getItem('active_session')
+    let data = null
     if (saved) {
-        const data = JSON.parse(saved)
+        try {
+            data = JSON.parse(saved)
+        } catch {
+            data = null
+        }
+    }
+    if (data) {
         exercises.value = data.exercises || []
     } else {
+        localStorage.removeItem('active_session')
         router.push('/programs')
     }
 })

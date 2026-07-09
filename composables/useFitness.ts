@@ -1,11 +1,13 @@
+import type { Category, Exercise, Program, Motivation, Diet, Supplement } from '~/types/fitness'
+
 export const useFitness = () => {
   // Global reactive state using Nuxt's useState
-  const categories = useState<any[]>('categories', () => []);
-  const exercises = useState<any[]>('exercises', () => []);
-  const programs = useState<any[]>('programs', () => []);
-  const motivation = useState<any[]>('motivation', () => []);
-  const diets = useState<any[]>('diets', () => []);
-  const supplements = useState<any[]>('supplements', () => []);
+  const categories = useState<Category[]>('categories', () => []);
+  const exercises = useState<Exercise[]>('exercises', () => []);
+  const programs = useState<Program[]>('programs', () => []);
+  const motivation = useState<Motivation[]>('motivation', () => []);
+  const diets = useState<Diet[]>('diets', () => []);
+  const supplements = useState<Supplement[]>('supplements', () => []);
   const loading = useState('fitness_loading', () => false);
   const error = useState<string | null>('fitness_error', () => null);
 
@@ -21,30 +23,30 @@ export const useFitness = () => {
   // Actions
   const loadAllData = async () => {
     if (loading.value) return;
-    
+
     loading.value = true;
     error.value = null;
-    
+
     const config = useRuntimeConfig();
     const apiBase = config.public.apiBase;
 
     try {
       const [cats, exs, progs, mot, dt, sups] = await Promise.all([
-        $fetch(`${apiBase}/api/categories/`),
-        $fetch(`${apiBase}/api/exercises/`),
-        $fetch(`${apiBase}/api/programs/`),
-        $fetch(`${apiBase}/api/motivation/`),
-        $fetch(`${apiBase}/api/diet/`),
-        $fetch(`${apiBase}/api/supplements/`),
+        $fetch<Category[]>(`${apiBase}/api/categories/`),
+        $fetch<Exercise[]>(`${apiBase}/api/exercises/`),
+        $fetch<Program[]>(`${apiBase}/api/programs/`),
+        $fetch<Motivation[]>(`${apiBase}/api/motivation/`),
+        $fetch<Diet[]>(`${apiBase}/api/diet/`),
+        $fetch<Supplement[]>(`${apiBase}/api/supplements/`),
       ]);
 
-      categories.value = cats as any[];
-      exercises.value = exs as any[];
-      programs.value = progs as any[];
-      motivation.value = mot as any[];
-      diets.value = dt as any[];
-      supplements.value = sups as any[];
-      
+      categories.value = cats;
+      exercises.value = exs;
+      programs.value = progs;
+      motivation.value = mot;
+      diets.value = dt;
+      supplements.value = sups;
+
       error.value = null;
     } catch (err: any) {
       console.error('Failed to fetch fitness data:', err);

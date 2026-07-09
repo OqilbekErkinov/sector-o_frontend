@@ -49,7 +49,12 @@
 
       <div class="details-card mb-3" v-if="t(supplement, 'sources')">
         <h3>📚 {{ $t('nutrition.sources', 'Ilmiy manbalar') }}</h3>
-        <div class="detail-text sources-text" v-html="formatSources(t(supplement, 'sources'))"></div>
+        <p class="detail-text sources-text" v-for="(line, li) in sourceLines" :key="li">
+          <template v-for="(part, pi) in line" :key="pi">
+            <a v-if="part.link" :href="part.value" target="_blank" rel="noopener noreferrer">{{ part.value }}</a>
+            <template v-else>{{ part.value }}</template>
+          </template>
+        </p>
       </div>
     </template>
 
@@ -80,17 +85,8 @@ const { data: supplement, pending } = await useAsyncData(`supplement-${supplemen
   return $fetch(`${config.public.apiBase}/api/supplements/${supplementId}/`);
 });
 
-function formatSources(text) {
-  if (!text) return '';
-  // Convert simple text with links to clickable links or just preserve line breaks
-  // We'll replace new lines with <br/> to keep formatting
-  let formatted = text.replace(/\n/g, '<br/>');
-  // Simple regex to linkify URLs if needed (optional)
-  const urlRegex = /(https?:\/\/[^\s]+)/g;
-  return formatted.replace(urlRegex, function(url) {
-    return '<a href="' + url + '" target="_blank" style="color: #00CFFF; text-decoration: underline;">' + url + '</a>';
-  });
-}
+// Renders "sources" text safely without v-html — see utils/textFormat.ts.
+const sourceLines = computed(() => parseSourceLines(t(supplement.value, 'sources')));
 </script>
 
 <style scoped>

@@ -85,7 +85,7 @@ import { useAuth } from '~/composables/useAuth';
 
 const config = useRuntimeConfig();
 const router = useRouter();
-const { token } = useAuth();
+const { token, isLoggedIn, user: currentUser, fetchUser } = useAuth();
 
 const searchEmail = ref('');
 const searchError = ref('');
@@ -105,20 +105,27 @@ onMounted(async () => {
   }
   fetchConversations();
   
-  // WebSocket ulanish
-  const token = useCookie('auth_token').value;
-  if (token) {
-    const config = useRuntimeConfig();
-    const wsBase = config.public.apiBase.replace('http', 'ws').replace('/api', '');
-    ws = new WebSocket(`${wsBase}/ws/chat/?token=${token}`);
-    
-    ws.onmessage = (event) => {
-      const data = JSON.parse(event.data);
-      if (data.type === 'new_message') {
-        // Yangi xabar bo'lsa ro'yxatni yangilaymiz
-        fetchConversations();
-      }
-    };
+  // WebSocket ulanish — uzoq muddatli JWT o'rniga bir martalik, qisqa
+  // muddatli "ticket" ishlatamiz, shunda token URL/serverlogda qolmaydi
+  if (token.value) {
+    try {
+      const { ticket } = await $fetch(`${config.public.apiBase}/api/chat/ws-ticket/`, {
+        method: 'POST',
+        headers: { Authorization: `Bearer ${token.value}` }
+      });
+      const wsBase = config.public.apiBase.replace('http', 'ws').replace('/api', '');
+      ws = new WebSocket(`${wsBase}/ws/chat/?ticket=${ticket}`);
+
+      ws.onmessage = (event) => {
+        const data = JSON.parse(event.data);
+        if (data.type === 'new_message') {
+          // Yangi xabar bo'lsa ro'yxatni yangilaymiz
+          fetchConversations();
+        }
+      };
+    } catch (e) {
+      console.error("WebSocket ulanishda xatolik:", e);
+    }
   }
 });
 

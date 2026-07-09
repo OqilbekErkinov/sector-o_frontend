@@ -213,77 +213,32 @@ select:focus {
 }
 
 .supplement-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
   background: rgba(255, 255, 255, 0.03);
   border: 1px solid rgba(255, 255, 255, 0.08);
   border-radius: 16px;
-  overflow: hidden;
+  padding: 16px 18px;
+  color: #fff;
+  text-decoration: none;
+  font-size: 15px;
+  font-weight: 600;
   transition: border-color 0.3s, background 0.3s;
 }
 
-.supplement-item.expanded {
+.supplement-item:active {
+  opacity: 0.7;
+}
+
+.supplement-item:hover {
   border-color: rgba(0, 207, 255, 0.3);
   background: rgba(0, 207, 255, 0.04);
 }
 
-.supplement-header {
-  width: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 16px 18px;
-  background: none;
-  border: none;
-  color: #fff;
-  cursor: pointer;
-  font-size: 15px;
-  font-weight: 600;
-  transition: color 0.2s;
-}
-
-.supplement-header:active {
-  opacity: 0.7;
-}
-
-.supplement-item.expanded .supplement-name {
-  color: #00CFFF;
-}
-
 .supplement-chevron {
   color: #666;
-  transition: transform 0.3s ease, color 0.3s;
   flex-shrink: 0;
-}
-
-.supplement-chevron.rotated {
-  transform: rotate(180deg);
-  color: #00CFFF;
-}
-
-.supplement-body {
-  padding: 0 18px 16px;
-}
-
-.supplement-body p {
-  font-size: 13px;
-  color: #999;
-  margin: 0;
-  line-height: 1.5;
-}
-
-/* Accordion transition */
-.accordion-enter-active,
-.accordion-leave-active {
-  transition: all 0.3s ease;
-  max-height: 200px;
-  overflow: hidden;
-}
-
-.accordion-enter-from,
-.accordion-leave-to {
-  max-height: 0;
-  opacity: 0;
-  padding-top: 0;
-  padding-bottom: 0;
 }
 
 /* GOALS */

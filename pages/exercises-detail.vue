@@ -127,14 +127,23 @@ const getLocalizedList = (obj, fieldBase) => {
 /* 🔥 FAVORITES LOGIC */
 const isFavorite = ref(false);
 
+function getFavorites() {
+  try {
+    const favs = JSON.parse(localStorage.getItem("favorites") || "[]");
+    return Array.isArray(favs) ? favs : [];
+  } catch {
+    return [];
+  }
+}
+
 function checkFavorite() {
   if (!exercise.value) return;
-  const favs = JSON.parse(localStorage.getItem("favorites") || "[]");
+  const favs = getFavorites();
   isFavorite.value = favs.includes(exercise.value.id);
 }
 
 function toggleFavorite() {
-  let favs = JSON.parse(localStorage.getItem("favorites") || "[]");
+  let favs = getFavorites();
   if (isFavorite.value) {
     favs = favs.filter(id => id !== exercise.value.id);
   } else {
