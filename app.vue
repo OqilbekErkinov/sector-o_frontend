@@ -22,6 +22,13 @@
       </div>
     </Transition>
 
+    <!-- Offline Banner -->
+    <Transition name="fade">
+      <div v-if="!isOnline" class="offline-banner">
+        {{ $t('error.offline') }}
+      </div>
+    </Transition>
+
     <NuxtLayout>
       <div class="page-content">
         <NuxtPage />
@@ -36,6 +43,7 @@ import { onMounted } from 'vue';
 
 const fitness = useFitness();
 const route = useRoute();
+const { isOnline } = useOnline();
 
 onMounted(() => {
   fitness.loadAllData();
@@ -142,5 +150,21 @@ onMounted(() => {
 
 .btn-retry:active {
   transform: scale(0.95);
+}
+
+/* Offline Banner */
+.offline-banner {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 10001;
+  background: #ff9800;
+  color: #000;
+  text-align: center;
+  font-size: 13px;
+  font-weight: 600;
+  padding: 8px 16px;
+  padding-top: calc(8px + env(safe-area-inset-top));
 }
 </style>

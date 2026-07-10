@@ -37,7 +37,13 @@
     "saving": "Saving...",
     "rankings": "Rankings",
     "chat": "Messages",
-    "tracking": "Diary"
+    "tracking": "Diary",
+    "install_app": "Install as app",
+    "install_app_ios_title": "Install on iPhone or iPad",
+    "install_app_ios_step1": "Tap the Share button in Safari's toolbar",
+    "install_app_ios_step2": "Choose \"Add to Home Screen\" from the list",
+    "install_app_ios_step3": "Tap \"Add\" in the top-right corner",
+    "install_app_ios_close": "Got it"
   },
   "chat": {
     "my_messages": "My Messages",
@@ -255,6 +261,17 @@
     "no": "No",
     "save": "Save",
     "cancel": "Cancel"
+  },
+  "error": {
+    "not_found_title": "Page not found",
+    "not_found_desc": "The page you're looking for doesn't exist or has been moved.",
+    "server_title": "Couldn't reach the server",
+    "server_desc": "The server ran into a temporary problem. Please try again shortly.",
+    "generic_title": "Something went wrong",
+    "generic_desc": "An unexpected error occurred. Please try again.",
+    "retry": "Retry",
+    "go_home": "Go to home page",
+    "offline": "No internet connection. Will resume automatically once reconnected."
   },
   "tracking": {
     "title": "Diary",

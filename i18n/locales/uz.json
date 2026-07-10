@@ -37,7 +37,13 @@
     "saving": "Saqlanmoqda...",
     "rankings": "Reyting",
     "chat": "Xabarlar",
-    "tracking": "Kundalik"
+    "tracking": "Kundalik",
+    "install_app": "Ilova sifatida o'rnatish",
+    "install_app_ios_title": "iPhone yoki iPad'ga o'rnatish",
+    "install_app_ios_step1": "Safari'da pastdagi ulashish tugmasini bosing",
+    "install_app_ios_step2": "Ro'yxatdan \"Bosh ekranga qo'shish\"ni tanlang",
+    "install_app_ios_step3": "Yuqori o'ng burchakda \"Qo'shish\"ni bosing",
+    "install_app_ios_close": "Tushunarli"
   },
   "chat": {
     "my_messages": "Mening xabarlarim",
@@ -255,6 +261,17 @@
     "no": "Yo'q",
     "save": "Saqlash",
     "cancel": "Bekor qilish"
+  },
+  "error": {
+    "not_found_title": "Sahifa topilmadi",
+    "not_found_desc": "Siz izlagan sahifa mavjud emas yoki ko'chirilgan.",
+    "server_title": "Server bilan bog'lanib bo'lmadi",
+    "server_desc": "Serverda vaqtinchalik nosozlik yuz berdi. Iltimos, birozdan so'ng qayta urinib ko'ring.",
+    "generic_title": "Nimadir xato ketdi",
+    "generic_desc": "Kutilmagan xatolik yuz berdi. Iltimos, qayta urinib ko'ring.",
+    "retry": "Qayta urinish",
+    "go_home": "Bosh sahifaga qaytish",
+    "offline": "Internet aloqasi yo'q. Ulanish tiklanishi bilan davom etadi."
   },
   "tracking": {
     "title": "Kundalik",

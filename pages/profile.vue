@@ -208,6 +208,23 @@
                 </div>
             </transition>
             
+            <div v-if="canShowInstallButton" class="menu-item" @click="handleInstallClick">
+                <div class="menu-text">
+                    <span class="menu-icon">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#00CFFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M12 3v12"></path>
+                            <path d="M7 10l5 5 5-5"></path>
+                            <path d="M5 21h14"></path>
+                        </svg>
+                    </span>
+                    {{ $t('profile.install_app') }}
+                </div>
+                <div class="menu-arrow">
+                    <svg width="8" height="14" viewBox="0 0 8 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M1 1L7 7L1 13" stroke="white" stroke-linecap="round" />
+                    </svg>
+                </div>
+            </div>
             <div class="menu-item" @click="handleLogout">
                 <div class="menu-text" style="color: #ff4d4d">
                     <svg class="me-2" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#ff4d4d" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -219,14 +236,18 @@
                 </div>
             </div>
         </div>
+        <IosInstallModal :visible="showIosInstallModal" @close="showIosInstallModal = false" />
     </div>
 </template>
 <script setup>
 import { ref, reactive, onMounted } from 'vue'
 import { useAuth } from '~/composables/useAuth'
+import { useInstallPrompt } from '~/composables/useInstallPrompt'
 
 const { locale, setLocale } = useI18n()
 const { user, fetchUser, updateProfile, logout } = useAuth()
+const { isIOS, canShowInstallButton, promptInstall } = useInstallPrompt()
+const showIosInstallModal = ref(false)
 
 const showSettings = ref(false)
 const showCareServiceModal = ref(false)
@@ -283,6 +304,14 @@ const handleUpdateProfile = async () => {
 
 const handleLogout = () => {
     logout()
+}
+
+const handleInstallClick = async () => {
+    if (isIOS.value) {
+        showIosInstallModal.value = true
+    } else {
+        await promptInstall()
+    }
 }
 
 const onFileChange = (e) => {
