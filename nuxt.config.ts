@@ -32,7 +32,13 @@ export default defineNuxtConfig({
           crossorigin: 'anonymous',
         },
         { rel: 'apple-touch-icon', href: '/icons/apple-touch-icon-180x180.png' },
-        { rel: 'manifest', href: '/manifest.webmanifest' },
+        // Production only: with the PWA dev service worker disabled (see
+        // `pwa.devOptions` below), nothing serves /manifest.webmanifest under
+        // `npm run dev`, so a hardcoded link there just 404s and spams a Vue
+        // Router "no match" warning on every page load.
+        ...(process.env.NODE_ENV === 'production'
+          ? [{ rel: 'manifest', href: '/manifest.webmanifest' }]
+          : []),
       ],
     }
   },
@@ -92,7 +98,16 @@ export default defineNuxtConfig({
       installPrompt: true,
     },
     devOptions: {
-      enabled: true,
+      // Disabled: @vite-pwa/nuxt's dev service worker intermittently fails
+      // to emit `.nuxt/dev-sw-dist/sw.js` (notably after a `nuxt build`
+      // touches `.nuxt`), and every request for it then throws ENOENT onto
+      // the HMR overlay. The SW isn't needed for normal dev work, and an
+      // active SW in dev mostly just causes stale-cache confusion. The full
+      // PWA still builds for production and is testable with
+      // `npm run build && npm run preview`. Set back to `true` only when you
+      // specifically need to test install/offline under `npm run dev`.
+      enabled: false,
+      suppressWarnings: true,
       type: 'module',
     },
   },

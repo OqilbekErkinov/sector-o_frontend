@@ -1,6 +1,6 @@
 <template>
     <div class="programs-page container py-4 pb-5">
-        
+
         <!-- 🔙 BACK NAVIGATION -->
         <div v-if="view !== 'list'" class="nav-back" @click="goBack">
             <span>←</span> {{ view === 'days' ? $t('programs.back_to_programs') : t(selectedProgram, 'name') }}
@@ -14,12 +14,20 @@
 
         <!-- 🚀 VIEW: LIST OF PROGRAMS -->
         <div v-if="view === 'list'" class="program-grid">
-            <div v-for="program in programs" :key="program.id" class="program-card reveal" @click="selectProgram(program)">
-                <NuxtImg :src="getMediaUrl(program.img)" loading="lazy" />
-                <div class="badge" :class="program.level.toLowerCase()">{{ program.level }}</div>
+            <div v-for="program in allPrograms" :key="program.id" class="program-card reveal" @click="selectProgram(program)">
+                <NuxtImg v-if="program.img" :src="getMediaUrl(program.img)" loading="lazy" />
+                <div v-else class="program-card-fallback">
+                    <span>{{ (t(program, 'name') || '?').charAt(0).toUpperCase() }}</span>
+                </div>
+                <div v-if="program.isActive" class="badge active-badge">{{ $t('programs.active_badge') }}</div>
+                <div v-else-if="program.isMine" class="badge mine">{{ $t('programs.mine_badge') }}</div>
+                <div v-else-if="program.level" class="badge" :class="program.level.toLowerCase()">{{ program.level }}</div>
                 <div class="overlay">
                     <h3>{{ t(program, 'name') }}</h3>
-                    <p>{{ program.duration }} • {{ $t('programs.days', { count: program.days.length }) }}</p>
+                    <p>
+                        <template v-if="program.duration">{{ program.duration }} • </template>
+                        {{ $t('programs.days', { count: program.days.length }) }}
+                    </p>
                 </div>
             </div>
         </div>
@@ -27,10 +35,10 @@
         <!-- 📅 VIEW: PROGRAM DAYS -->
         <div v-else-if="view === 'days'" class="program-days reveal">
             <h1 class="title">{{ t(selectedProgram, 'name') }}</h1>
-            <p class="subtitle mb-4">{{ t(selectedProgram, 'description') }}</p>
+            <p v-if="t(selectedProgram, 'description')" class="subtitle mb-4">{{ t(selectedProgram, 'description') }}</p>
 
             <div class="day-list">
-                <div v-for="day in selectedProgram.days" :key="day.id" class="day-card" 
+                <div v-for="day in selectedProgram.days" :key="day.id" class="day-card"
                      :class="{ 'rest-day': day.exercises.length === 0 }"
                      @click="selectDay(day)">
                     <div class="day-info">
@@ -70,19 +78,28 @@
 </template>
 
 <script setup>
-import { ref, onMounted, nextTick, computed } from 'vue'
+import { ref, onMounted, nextTick, computed, watch } from 'vue'
 import { useRouter } from 'vue-router'
 import { useFitness } from '~/composables/useFitness'
 import { useLocalized } from '~/composables/useLocalized'
 import { useApi } from '~/composables/useApi'
+import { useAuth } from '~/composables/useAuth'
+import { useUserProgram } from '~/composables/useUserProgram'
 
 const router = useRouter()
 const fitness = useFitness()
 const { t } = useLocalized()
 const { getMediaUrl } = useApi()
+const { isLoggedIn } = useAuth()
+const userProgram = useUserProgram()
 
 /* DATA FROM COMPOSABLE */
-const programs = computed(() => fitness.programs.value)
+const catalogPrograms = computed(() => fitness.programs.value)
+
+// The user's own programs, built/copied in the tracking → "Dastur" tab.
+// Fetched here so they show on this page alongside the admin catalog and can
+// be run through the exact same days → exercises → session flow.
+const myProgramsRaw = ref([])
 
 // SEO Optimization
 useSeoMeta({
@@ -96,6 +113,48 @@ useSeoMeta({
 const view = ref('list') // 'list', 'days', 'exercises'
 const selectedProgram = ref(null)
 const selectedDay = ref(null)
+
+/* USER PROGRAMS → CATALOG SHAPE
+   A UserProgramExercise only stores a name + an optional catalog Exercise id.
+   Resolve that id to the full Exercise so the session player (training.vue)
+   gets the same media/description/difficulty an admin program provides;
+   freeform entries fall back to a name-only stub the player tolerates. */
+function resolveUserExercise(ue) {
+  const full = ue.exercise ? fitness.exercises.value.find(e => e.id === ue.exercise) : null
+  if (full) return full
+  return {
+    id: `up-ex-${ue.id}`,
+    name: ue.name, name_uz: ue.name, name_ru: ue.name, name_en: ue.name,
+    img: null, video: null, duration: '', difficulty: '',
+    description_uz: '', description_ru: '', description_en: '',
+  }
+}
+
+const myPrograms = computed(() =>
+  myProgramsRaw.value
+    .map(p => ({
+      id: `user-${p.id}`,
+      isMine: true,
+      isActive: !!p.is_active,
+      // `name` (plus the *_uz/_ru/_en aliases) so useLocalized's t() resolves
+      // it the same way it does a catalog program's name_* fields.
+      name: p.name, name_uz: p.name, name_ru: p.name, name_en: p.name,
+      description_uz: '', description_ru: '', description_en: '',
+      level: null,
+      duration: '',
+      img: p.img || null,
+      days: p.days.map(d => ({
+        id: d.id,
+        name: d.name, name_uz: d.name, name_ru: d.name, name_en: d.name,
+        exercises: d.exercises.map(resolveUserExercise),
+      })),
+    }))
+    // The active program is always pinned to the top of the list.
+    .sort((a, b) => Number(b.isActive) - Number(a.isActive))
+)
+
+// User's own programs first, then the admin catalog.
+const allPrograms = computed(() => [...myPrograms.value, ...catalogPrograms.value])
 
 /* METHODS */
 function selectProgram(program) {
@@ -131,24 +190,32 @@ function startTraining() {
 }
 
 /* ANIMATION */
-function triggerReveal() {
-    nextTick(() => {
-        const reveals = document.querySelectorAll('.reveal')
-        reveals.forEach(el => el.classList.add('active'))
-    })
+function activateReveals() {
+    if (!import.meta.client) return
+    document.querySelectorAll('.reveal:not(.active)').forEach(el => el.classList.add('active'))
 }
 
-onMounted(() => {
-    // Initial reveals
-    const reveals = document.querySelectorAll('.reveal')
-    const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                entry.target.classList.add('active')
-            }
-        })
-    }, { threshold: 0.1 })
-    reveals.forEach(el => observer.observe(el))
+function triggerReveal() {
+    nextTick(activateReveals)
+}
+
+// User programs arrive from the API *after* the initial reveal pass, so their
+// freshly-rendered `.reveal` cards would otherwise stay stuck at opacity:0
+// (the slot is laid out, the card is invisible). Re-run the reveal whenever
+// the merged list changes.
+watch(allPrograms, () => nextTick(activateReveals))
+
+onMounted(async () => {
+    if (isLoggedIn.value) {
+        try {
+            myProgramsRaw.value = await userProgram.fetchPrograms()
+        } catch {
+            myProgramsRaw.value = []
+        }
+    }
+
+    await nextTick()
+    activateReveals()
 })
 </script>
 
@@ -165,4 +232,34 @@ onMounted(() => {
     border-radius: 16px;
     letter-spacing: 1px;
 }
-</style>
+
+/* User programs have no cover image — a branded initial tile stands in so
+   the card still reads at a glance in the same grid as catalog programs. */
+.program-card-fallback {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(140deg, #1c2b30 0%, #0c1417 60%, #00323f 100%);
+    border-radius: 20px;
+}
+
+.program-card-fallback span {
+    font-family: 'Gropled', sans-serif;
+    font-size: 72px;
+    color: rgba(0, 207, 255, 0.55);
+    text-shadow: 0 0 24px rgba(0, 207, 255, 0.35);
+}
+
+.badge.mine {
+    background: rgba(0, 207, 255, 0.9);
+    color: #04222c;
+}
+
+.badge.active-badge {
+    background: linear-gradient(135deg, #00CFFF, #00e0b8);
+    color: #04222c;
+    box-shadow: 0 0 14px rgba(0, 207, 255, 0.45);
+}
+</style>

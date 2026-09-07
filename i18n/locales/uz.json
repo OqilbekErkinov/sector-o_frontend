@@ -226,7 +226,9 @@
     "back_to_programs": "Dasturlarga qaytish",
     "sets_reps": "Setlar va takrorlar",
     "up_next": "Keyingisi",
-    "xp_earned": "Ajoyib natija! Tajribangiz oshdi."
+    "xp_earned": "Ajoyib natija! Tajribangiz oshdi.",
+    "mine_badge": "Mening",
+    "active_badge": "Faol"
   },
   "exercises": {
     "choose_section_highlight": "BO'LIMNI TANLANG",
@@ -364,9 +366,11 @@
     "program_add_exercise": "+ Mashq qo'shish",
     "program_add_day": "+ Kun qo'shish",
     "program_save": "Dasturni saqlash",
+    "program_add_image": "Rasm qo'shish",
     "program_which_day_today": "Bugun qaysi kun?",
     "program_pick_manually": "Yo'q, o'zim tanlayman",
     "workout_invalid_sets": "{count} ta padxodda og'irlik yoki qaytaruv 0 turibdi. Aniq son kiriting.",
-    "program_day_done_hint": "✓ belgili kunlar shu hafta allaqachon bajarilgan — keyingi hafta yana ochiladi."
+    "program_day_done_hint": "✓ belgili kunlar shu hafta allaqachon bajarilgan — keyingi hafta yana ochiladi.",
+    "workout_draft_restored": "Saqlanmagan qoralama tiklandi"
   }
 }

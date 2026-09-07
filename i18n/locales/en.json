@@ -226,7 +226,9 @@
     "back_to_programs": "Back to Programs",
     "sets_reps": "Sets & Reps",
     "up_next": "Up Next",
-    "xp_earned": "Great job! Your experience increased."
+    "xp_earned": "Great job! Your experience increased.",
+    "mine_badge": "Mine",
+    "active_badge": "Active"
   },
   "exercises": {
     "choose_section_highlight": "CHOOSE SECTION",
@@ -364,9 +366,11 @@
     "program_add_exercise": "+ Add exercise",
     "program_add_day": "+ Add day",
     "program_save": "Save program",
+    "program_add_image": "Add photo",
     "program_which_day_today": "Which day is today?",
     "program_pick_manually": "No, I'll pick manually",
     "workout_invalid_sets": "{count} set(s) have weight or reps left at 0. Enter real values.",
-    "program_day_done_hint": "Days marked ✓ are already done this week — they reopen next week."
+    "program_day_done_hint": "Days marked ✓ are already done this week — they reopen next week.",
+    "workout_draft_restored": "Unsaved draft restored"
   }
 }

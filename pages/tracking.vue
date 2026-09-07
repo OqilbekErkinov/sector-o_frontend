@@ -29,6 +29,8 @@
           <span v-if="editingLogId && isEditingForm" class="editing-tag">{{ $t('tracking.editing_tag') }}</span>
         </div>
 
+        <p v-if="draftRestoredNotice" class="saved-msg">↩ {{ $t('tracking.workout_draft_restored') }}</p>
+
         <div v-if="showProgramDayPrompt" class="muscle-picker">
           <p class="muscle-picker-title">{{ $t('tracking.program_which_day_today') }}</p>
           <div class="muscle-chips">
@@ -487,6 +489,21 @@
         <h3 class="chart-title">{{ editingProgramId ? $t('tracking.program_edit_title') : $t('tracking.program_new_title') }}</h3>
         <input v-model="builderName" type="text" :placeholder="$t('tracking.program_name_placeholder')" class="mb-2" />
 
+        <div class="builder-image-row">
+          <label class="builder-image-picker" :class="{ 'has-image': builderImagePreview }">
+            <input type="file" accept="image/*" hidden @change="onBuilderImagePick" />
+            <img v-if="builderImagePreview" :src="builderImagePreview" alt="" />
+            <span v-else>🖼️ {{ $t('tracking.program_add_image') }}</span>
+          </label>
+          <button
+            v-if="builderImageFile"
+            type="button"
+            class="icon-btn danger"
+            :aria-label="$t('tracking.workout_cancel')"
+            @click="clearBuilderImage"
+          >✕</button>
+        </div>
+
         <div v-for="(day, dayIdx) in builderDays" :key="dayIdx" class="exercise-card">
           <div class="exercise-card-header">
             <input v-model="day.name" type="text" :placeholder="$t('tracking.program_day_name_placeholder')" class="program-day-name-input" />
@@ -579,8 +596,10 @@ import {
 } from 'chart.js'
 import { useFitness } from '~/composables/useFitness'
 import { useLocalized } from '~/composables/useLocalized'
+import { useApi } from '~/composables/useApi'
 import { useTracking } from '~/composables/useTracking'
 import { useUserProgram } from '~/composables/useUserProgram'
+import { useWorkoutDraft } from '~/composables/useWorkoutDraft'
 import { useAuth } from '~/composables/useAuth'
 import { MUSCLE_GROUPS, MEAL_TYPES } from '~/types/tracking'
 import { useI18n } from 'vue-i18n'
@@ -590,8 +609,10 @@ ChartJS.register(Title, Tooltip, Legend, BarElement, ArcElement, CategoryScale, 
 const fitness = useFitness()
 const { t } = useLocalized()
 const { t: $t } = useI18n()
+const { getMediaUrl } = useApi()
 const tracking = useTracking()
 const userProgram = useUserProgram()
+const workoutDraft = useWorkoutDraft()
 const auth = useAuth()
 
 const activeTab = ref('workout')
@@ -628,7 +649,15 @@ function muscleLabel(mg) {
 }
 
 function handleVisibilityChange() {
-  if (!document.hidden) checkForDayRollover()
+  if (document.hidden) {
+    // App backgrounded (e.g. user switched to another app) — flush the
+    // pending workout draft immediately rather than waiting out the
+    // debounce, since the tab may be frozen or killed before it fires.
+    clearTimeout(draftSaveTimer)
+    persistWorkoutDraft()
+  } else {
+    checkForDayRollover()
+  }
 }
 
 /* ── WORKOUT STATE ──
@@ -651,6 +680,8 @@ const pendingExercise = ref(null)
 const editingMuscleForIdx = ref(null)
 const saving = ref(false)
 const savedMessage = ref('')
+// Brief "we brought back your unsaved entries" hint after a draft restore.
+const draftRestoredNotice = ref(false)
 const workoutPeriod = ref('week')
 // Which calendar week (Monday) the muscle-group chart shows — lets the user
 // page through past weeks without affecting "today" anywhere else (program
@@ -672,6 +703,11 @@ const builderMode = ref(false)
 const editingProgramId = ref(null)
 const builderName = ref('')
 const builderDays = ref([])
+// Cover image for the program being built. `builderImageFile` is a freshly
+// picked File pending upload; `builderImagePreview` is what the <img> shows —
+// a blob: URL for a new pick, or the existing server URL when editing.
+const builderImageFile = ref(null)
+const builderImagePreview = ref('')
 const builderPicker = reactive({ dayIdx: null, search: '', pending: null })
 const editingBuilderMuscle = ref(null)
 
@@ -742,10 +778,17 @@ async function handleCopyFromCatalog(programId) {
   await loadMyPrograms()
 }
 
+function resetBuilderImage() {
+  if (builderImagePreview.value.startsWith('blob:')) URL.revokeObjectURL(builderImagePreview.value)
+  builderImageFile.value = null
+  builderImagePreview.value = ''
+}
+
 function openBuilderForNew() {
   editingProgramId.value = null
   builderName.value = ''
   builderDays.value = []
+  resetBuilderImage()
   builderMode.value = true
 }
 
@@ -761,7 +804,23 @@ function openBuilderForEdit(program) {
     name: d.name,
     exercises: d.exercises.map(e => ({ id: e.id, exercise: e.exercise, name: e.name, muscle_group: e.muscle_group || '' })),
   }))
+  resetBuilderImage()
+  builderImagePreview.value = program.img ? getMediaUrl(program.img) : ''
   builderMode.value = true
+}
+
+function onBuilderImagePick(e) {
+  const file = e.target.files?.[0]
+  if (!file) return
+  if (builderImagePreview.value.startsWith('blob:')) URL.revokeObjectURL(builderImagePreview.value)
+  builderImageFile.value = file
+  builderImagePreview.value = URL.createObjectURL(file)
+}
+
+// Only cancels a not-yet-saved pick — removing an already-saved cover isn't
+// supported yet, so the ✕ is hidden unless a fresh file is staged.
+function clearBuilderImage() {
+  resetBuilderImage()
 }
 
 function closeBuilder() {
@@ -770,6 +829,7 @@ function closeBuilder() {
   builderPicker.dayIdx = null
   builderPicker.pending = null
   editingBuilderMuscle.value = null
+  resetBuilderImage()
 }
 
 function addBuilderDay() {
@@ -832,10 +892,21 @@ async function saveBuilderProgram() {
       })),
     })),
   }
-  if (editingProgramId.value) {
-    await userProgram.updateProgram(editingProgramId.value, payload)
+  let programId = editingProgramId.value
+  if (programId) {
+    await userProgram.updateProgram(programId, payload)
   } else {
-    await userProgram.createProgram(payload)
+    const created = await userProgram.createProgram(payload)
+    programId = created.id
+  }
+  // Cover image travels as its own multipart PATCH (see uploadProgramImage) —
+  // only when a new file was actually picked.
+  if (builderImageFile.value && programId) {
+    try {
+      await userProgram.uploadProgramImage(programId, builderImageFile.value)
+    } catch (e) {
+      console.error('Dastur rasmini yuklashda xatolik:', e)
+    }
   }
   await Promise.all([loadMyPrograms(), loadActiveProgram()])
   closeBuilder()
@@ -943,7 +1014,84 @@ function loadLogForDate(date) {
     isEditingForm.value = true // nothing saved yet for this date — go straight to the form
     exercises.value = []
   }
+  // Whenever we (re)load *today*, an unsaved draft from earlier in the day
+  // wins over whatever we just set — that's the whole point of the draft.
+  // Past dates and the just-saved-then-reloaded case are unaffected (the
+  // draft is either not for today, or already cleared).
+  if (date === today.value) restoreWorkoutDraft()
 }
+
+/* ── AUTO-SAVED DRAFT ──
+   The workout form is only persisted to the server on an explicit, fully
+   valid "Kunni saqlash". Everything typed before that (weights, reps, the
+   chosen program day, added exercises) is mirrored to localStorage on
+   every change so a backgrounded app or a closed tab never loses it. The
+   draft only ever restores onto today, and is dropped the moment the day
+   is saved or the calendar day turns over. */
+let draftSaveTimer = null
+
+function restoreWorkoutDraft() {
+  if (formDate.value !== today.value) return
+  const draft = workoutDraft.readForToday(today.value)
+  if (!draft || !draft.exercises || draft.exercises.length === 0) return
+
+  exercises.value = draft.exercises.map((ex, idx) => ({
+    exercise: ex.exercise ?? null,
+    name: ex.name,
+    muscle_group: ex.muscle_group || '',
+    order: ex.order ?? idx,
+    sets: (ex.sets || []).map((s, i) => ({
+      set_number: s.set_number ?? i + 1,
+      weight_kg: s.weight_kg ?? 0,
+      reps: s.reps ?? 0,
+    })),
+  }))
+
+  // Keep the link to an existing saved log only if it still exists, so the
+  // save PATCHes it in place; otherwise the draft saves as a new log.
+  editingLogId.value =
+    draft.editingLogId && workoutHistory.value.some(l => l.id === draft.editingLogId)
+      ? draft.editingLogId
+      : null
+
+  // Drop a program-day id whose day was deleted/renamed away since — the
+  // log then just saves unlinked instead of failing server validation.
+  const dayStillExists = !!activeProgram.value?.days?.some(d => d.id === draft.programDayId)
+  selectedProgramDayId.value = dayStillExists ? draft.programDayId : null
+
+  isEditingForm.value = true
+  programPromptDismissed.value = true
+  draftRestoredNotice.value = true
+  setTimeout(() => { draftRestoredNotice.value = false }, 4000)
+}
+
+function persistWorkoutDraft() {
+  if (!import.meta.client) return
+  // Only the live "editing today" form is a draft. A read-only saved
+  // summary, a past date being edited, or the program-day prompt aren't —
+  // and must not touch a draft that may belong to a real in-progress today.
+  const isLiveTodayForm = formDate.value === today.value && isEditingForm.value
+  if (!isLiveTodayForm) return
+  if (exercises.value.length === 0) {
+    workoutDraft.clear()
+    return
+  }
+  workoutDraft.save({
+    date: today.value,
+    programDayId: selectedProgramDayId.value ?? null,
+    editingLogId: editingLogId.value ?? null,
+    exercises: JSON.parse(JSON.stringify(exercises.value)),
+  })
+}
+
+watch(
+  () => [formDate.value, isEditingForm.value, selectedProgramDayId.value, exercises.value],
+  () => {
+    clearTimeout(draftSaveTimer)
+    draftSaveTimer = setTimeout(persistWorkoutDraft, 400)
+  },
+  { deep: true },
+)
 
 function editHistoryWorkoutDay(log) {
   formDate.value = log.date
@@ -1047,6 +1195,8 @@ async function saveWorkoutDay() {
       await tracking.createWorkoutLog(payload)
     }
     savedMessage.value = $t('tracking.workout_saved')
+    // The day is now on the server — the local draft has served its purpose.
+    workoutDraft.clear()
     await Promise.all([loadWorkoutSummary(), loadWorkoutHistory(), loadComparison()])
     // Re-resolve the form against this date rather than blindly clearing it —
     // formDate's log now exists (we just saved it), so this puts the form
@@ -1360,9 +1510,11 @@ const macroChartData = computed(() => ({
 }))
 
 onMounted(async () => {
-  loadActiveProgram()
   loadMyPrograms()
-  await loadWorkoutHistory()
+  // Draft restore (inside loadLogForDate) needs both the workout history —
+  // to keep a link to an already-saved log — and the active program — to
+  // validate the draft's saved program-day id — so await them first.
+  await Promise.all([loadActiveProgram(), loadWorkoutHistory()])
   loadLogForDate(formDate.value)
   loadWorkoutSummary()
   loadComparison()
@@ -1373,6 +1525,7 @@ onMounted(async () => {
 })
 
 onUnmounted(() => {
+  clearTimeout(draftSaveTimer)
   document.removeEventListener('visibilitychange', handleVisibilityChange)
 })
 </script>
@@ -2012,6 +2165,41 @@ onUnmounted(() => {
   padding: 8px;
   font-size: 14px;
   margin-right: 8px;
+}
+
+/* Program cover image picker (builder) */
+.builder-image-row {
+  display: flex;
+  align-items: stretch;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+.builder-image-picker {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 96px;
+  border: 1px dashed #444;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.03);
+  color: #00CFFF;
+  font-size: 13px;
+  cursor: pointer;
+  overflow: hidden;
+}
+
+.builder-image-picker.has-image {
+  border-style: solid;
+  border-color: rgba(0, 207, 255, 0.3);
+  min-height: 140px;
+}
+
+.builder-image-picker img {
+  width: 100%;
+  height: 140px;
+  object-fit: cover;
 }
 
 .program-exercise-row {

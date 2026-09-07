@@ -18,6 +18,7 @@ export interface UserProgramDay {
 export interface UserProgram {
   id: number
   name: string
+  img?: string | null
   is_active: boolean
   created_at: string
   days: UserProgramDay[]

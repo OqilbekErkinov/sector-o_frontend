@@ -226,7 +226,9 @@
     "back_to_programs": "Назад к программам",
     "sets_reps": "Сеты и повторения",
     "up_next": "Далее",
-    "xp_earned": "Отличный результат! Ваш опыт увеличился."
+    "xp_earned": "Отличный результат! Ваш опыт увеличился.",
+    "mine_badge": "Моя",
+    "active_badge": "Активная"
   },
   "exercises": {
     "choose_section_highlight": "ВЫБЕРИТЕ РАЗДЕЛ",
@@ -364,9 +366,11 @@
     "program_add_exercise": "+ Добавить упражнение",
     "program_add_day": "+ Добавить день",
     "program_save": "Сохранить программу",
+    "program_add_image": "Добавить фото",
     "program_which_day_today": "Какой сегодня день?",
     "program_pick_manually": "Нет, выберу сам",
     "workout_invalid_sets": "{count} подход(а/ов) с весом или повторениями 0. Введите точные значения.",
-    "program_day_done_hint": "Дни с ✓ уже выполнены на этой неделе — снова откроются на следующей."
+    "program_day_done_hint": "Дни с ✓ уже выполнены на этой неделе — снова откроются на следующей.",
+    "workout_draft_restored": "Восстановлен несохранённый черновик"
   }
 }

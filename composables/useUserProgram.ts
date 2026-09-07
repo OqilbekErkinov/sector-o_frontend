@@ -48,6 +48,18 @@ export const useUserProgram = () => {
     })
   }
 
+  // Sent as its own multipart PATCH after create/update — the nested `days`
+  // array can't survive form-encoding, so the cover image travels separately.
+  const uploadProgramImage = (id: number, file: File) => {
+    const form = new FormData()
+    form.append('img', file)
+    return $fetch<UserProgram>(`${config.public.apiBase}/api/user-programs/${id}/`, {
+      method: 'PATCH',
+      headers: authHeaders(),
+      body: form,
+    })
+  }
+
   const copyFromCatalog = (programId: number) => {
     return $fetch<UserProgram>(`${config.public.apiBase}/api/user-programs/copy-from-catalog/`, {
       method: 'POST',
@@ -64,5 +76,6 @@ export const useUserProgram = () => {
     deleteProgram,
     activateProgram,
     copyFromCatalog,
+    uploadProgramImage,
   }
 }
